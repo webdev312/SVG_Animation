@@ -1,0 +1,19 @@
+{
+	"tagAlerts": [
+		{
+			"tag_id": "1",
+			"tag": "John",
+			"alert_text": "<h2>Hello world2!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+			"time": "01/01/2019 10:20",
+			"alert_type":"Patient waiting"
+		},
+		{
+			"tag_id": "1",
+			"tag": "John",
+			"alert_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+			"time": "01/01/2019 10:30",
+			"alert_type":"nurse in room"
+			
+		}
+	]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "hospital",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {},
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "d3": "^5.9.2",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}

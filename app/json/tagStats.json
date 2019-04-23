@@ -1,0 +1,61 @@
+{
+	"tagStats": {
+		"number_of_patients": [{
+				"stat_type": "No of patients",
+				"number of Patients": 100,
+				"time": "01/01/2019 10:00",
+				"stat_level": "Normal"
+			},
+			{
+				"stat_type": "No of patients",
+				"number of Patients": 120,
+				"time": "01/01/2019 11:00",
+				"stat_level": "Normal"
+			},
+			{
+				"stat_type": "No of patients",
+				"number of Patients": 150,
+				"time": "01/01/2019 12:00",
+				"stat_level": "Normal"
+			}
+		],
+		"bed_turn_over": [{
+				"stat_type": "Bed Turn over",
+				"bed_turn_over": 22,
+				"time": "01/01/2019 10:00",
+				"stat_level": "Normal"
+			},
+			{
+				"stat_type": "Bed Turn over",
+				"bed_turn_over": 32,
+				"time": "01/01/2019 11:00",
+				"stat_level": "High"
+			},
+			{
+				"stat_type": "Bed Turn over",
+				"bed_turn_over": 43,
+				"time": "01/01/2019 12:00",
+				"stat_level": "High"
+			}
+		],
+		"length_of_stay": [{
+				"stat_type": "Length of stay",
+				"length_of_stay": 321,
+				"time": "01/01/2019 10:00",
+				"stat_level": "Normal"
+			},
+			{
+				"stat_type": "Length of stay",
+				"length_of_stay": 352,
+				"time": "01/01/2019 11:00",
+				"stat_level": "High"
+			},
+			{
+				"stat_type": "Length of stay",
+				"length_of_stay": 43,
+				"time": "01/01/2019 12:00",
+				"stat_level": "High"
+			}
+		]
+	}
+}

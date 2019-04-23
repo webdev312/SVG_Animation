@@ -1,0 +1,94 @@
+{
+		"tagData": [
+					{
+						"tag_id": "1",
+						"tag": "John",
+						"icon":"svg/patient.svg",
+						"popup_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+						"movementments": [
+							{
+								"time": "01/01/2019 10:20",
+								"x": "220",
+								"y": "154",
+								"zone": "registration"
+							},
+							{
+								"time": "01/01/2019 11:10",
+								"x": "220",
+								"y": "256",
+								"zone": "area"
+							},							
+							{
+								"time": "01/01/2019 11:10",
+								"x": "150",
+								"y": "276",
+								"zone": "area 2"
+							}
+						]
+					},
+					{
+						"tag_id": "2",
+						"tag": "Pump 1",
+						"popup_text": "<h2>Hello world2!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+						"icon":"svg/pump_icon.svg",
+						"movementments": [
+							{
+								"time": "01/01/2019 09:10",
+								"x": "140",
+								"y": "80",
+								"zone": "waiting area"
+							},
+							{
+								"time": "01/01/2019 11:40",
+								"x": "200",
+								"y": "210",
+								"zone": "lobby"
+							},
+							{
+								"time": "01/01/2019 14:40",
+								"x": "190",
+								"y": "220",
+								"zone": "lobby"
+							},
+							{
+								"time": "01/01/2019 15:40",
+								"x": "150",
+								"y": "180",
+								"zone": "lobby"
+							}
+						]
+					},
+					{
+						"tag_id": "3",
+						"tag": "Wheel Chair 3",
+						"popup_text": "<h2>Hello world!3</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+						"icon":"svg/wheelchair.svg",
+						"movementments": [
+							{
+								"time": "01/01/2019 09:10",
+								"x": "130",
+								"y": "180",
+								"zone": "waiting area"
+							},
+							{
+								"time": "01/01/2019 11:40",
+								"x": "150",
+								"y": "150",
+								"zone": "lobby"
+							},
+							{
+								"time": "01/01/2019 14:40",
+								"x": "190",
+								"y": "110",
+								"zone": "lobby"
+							},
+							{
+								"time": "01/01/2019 15:40",
+								"x": "20",
+								"y": "110",
+								"zone": "lobby"
+							}
+						]
+					}
+		]				
+}
