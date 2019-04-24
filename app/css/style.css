@@ -1,0 +1,27 @@
+/* D3JS lines css */
+.line {
+    fill: none;
+    stroke: #1eff00;
+    stroke-width: 3;
+}
+.line1 {
+    fill: none;
+    stroke: #0051ff;
+    stroke-width: 3;
+}
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+/* Header */
+.navbar-brand{
+    color: white !important;
+}
+
+/* Main page */
+.row{
+    min-height: 40px;
+    line-height: 34px;
+    margin-top: 10px;
+}

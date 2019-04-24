@@ -1,6 +1,7 @@
 {
 	"tagStats": {
-		"number_of_patients": [{
+		"number_of_patients": [
+			{
 				"stat_type": "No of patients",
 				"number of Patients": 100,
 				"time": "01/01/2019 10:00",
@@ -19,7 +20,8 @@
 				"stat_level": "Normal"
 			}
 		],
-		"bed_turn_over": [{
+		"bed_turn_over": [
+			{
 				"stat_type": "Bed Turn over",
 				"bed_turn_over": 22,
 				"time": "01/01/2019 10:00",
@@ -38,7 +40,8 @@
 				"stat_level": "High"
 			}
 		],
-		"length_of_stay": [{
+		"length_of_stay": [
+			{
 				"stat_type": "Length of stay",
 				"length_of_stay": 321,
 				"time": "01/01/2019 10:00",

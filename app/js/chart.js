@@ -1,70 +1,8 @@
-(function(){
-    var data = {
-        "tagStats": {
-            "number_of_patients": [{
-                    "stat_type": "No of patients",
-                    "number of Patients": 100,
-                    "time": "01/01/2019 10:00",
-                    "stat_level": "Normal"
-                },
-                {
-                    "stat_type": "No of patients",
-                    "number of Patients": 120,
-                    "time": "01/01/2019 11:00",
-                    "stat_level": "Normal"
-                },
-                {
-                    "stat_type": "No of patients",
-                    "number of Patients": 150,
-                    "time": "01/01/2019 12:00",
-                    "stat_level": "Normal"
-                }
-            ],
-            "bed_turn_over": [{
-                    "stat_type": "Bed Turn over",
-                    "bed_turn_over": 22,
-                    "time": "01/01/2019 10:00",
-                    "stat_level": "Normal"
-                },
-                {
-                    "stat_type": "Bed Turn over",
-                    "bed_turn_over": 32,
-                    "time": "01/01/2019 11:00",
-                    "stat_level": "High"
-                },
-                {
-                    "stat_type": "Bed Turn over",
-                    "bed_turn_over": 43,
-                    "time": "01/01/2019 12:00",
-                    "stat_level": "High"
-                }
-            ],
-            "length_of_stay": [{
-                    "stat_type": "Length of stay",
-                    "length_of_stay": 321,
-                    "time": "01/01/2019 10:00",
-                    "stat_level": "Normal"
-                },
-                {
-                    "stat_type": "Length of stay",
-                    "length_of_stay": 352,
-                    "time": "01/01/2019 11:00",
-                    "stat_level": "High"
-                },
-                {
-                    "stat_type": "Length of stay",
-                    "length_of_stay": 43,
-                    "time": "01/01/2019 12:00",
-                    "stat_level": "High"
-                }
-            ]
-        }
-    };
-    console.log(data.tagStats);
+function losChart(strID){
     // 2. Use the margin convention practice 
     var margin = {top: 50, right: 50, bottom: 50, left: 50}
-    , width = window.innerWidth - margin.left - margin.right - 10 // Use the window's width 
-    , height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
+    , width = window.innerWidth / 100 * 40 - margin.left - margin.right - 20 // Use the window's width 
+    , height = 200 - margin.top - margin.bottom; // Use the window's height
 
     // The number of datapoints
     var n = 21;
@@ -95,7 +33,7 @@
     var dataset1 = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } });
 
     // 1. Add the SVG to the page and employ #2
-    var svg = d3.select("#chart").append("svg")
+    var svg = d3.select("#" + strID).append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -122,4 +60,8 @@
     .datum(dataset1) // 10. Binds data to the line 
     .attr("class", "line1") // Assign a class for styling 
     .attr("d", line2); // 11. Calls the line generator 
+}
+(function(){
+    losChart("len_stay");
+    losChart("turn_time");
 })();
