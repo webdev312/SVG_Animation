@@ -1,7 +1,7 @@
 function getMovementData(){
     var ret = {};
     $.ajax({
-        url: 'http://localhost:8080/json/tag_movements.json',
+        url: 'http://184.73.67.205:8080/json/tag_movements.json',
         async: false,
         type: 'GET',
         dataType: 'JSON',
