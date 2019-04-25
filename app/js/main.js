@@ -103,7 +103,7 @@ const TIME_FRAME_10MIN = 200;
 			points: [
 				{ value: x + ', ' + y + ', ' + x + ', ' + y}
 			],
-			duration: 200,
+			duration: TIME_FRAME_10MIN,
 			opacity: 0,
 			autoplay: true,
 		});
