@@ -1,0 +1,81 @@
+{
+    "tagData": [
+        {
+            "replay_type": "Tag Movement",
+            "replay_data": {
+                "tag_id": "1",
+                "tag": "John",
+                "icon": "patient.svg",
+                "popup_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+                "time": "01/01/2019 10:20",
+                "x": "220",
+                "y": "154",
+                "zone": "registration"
+            }
+        },
+        {
+            "replay_type": "Tag alert",
+            "replay_data": {
+                "tag_id": "1",
+                "tag": "John",
+                "alert_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+                "time": "01/01/2019 10:20",
+                "alert_type": "Patient waiting"
+            }
+        },
+        {
+            "replay_type": "Tag stats",
+            "replay_data": {
+                "stat_type": "No of patients",
+                "number of Patients": 150,
+                "time": "01/01/2019 12:00",
+                "stat_level": "Normal"
+            }
+        },
+        {
+            "replay_type": "Tag Movement",
+            "replay_data": {
+                "tag_id": "1",
+                "tag": "John",
+                "icon": "patient.svg",
+                "popup_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+                "time": "01/01/2019 10:50",
+                "x": "220",
+                "y": "256",
+                "zone": "area"
+            }
+        },
+        {
+            "replay_type": "Tag alert",
+            "replay_data": {
+                "tag_id": "1",
+                "tag": "John",
+                "alert_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+                "time": "01/01/2019 11:10",
+                "alert_type": "nurse in room"
+            }
+        },
+        {
+            "replay_type": "Tag stats",
+            "replay_data": {
+                "stat_type": "No of patients",
+                "number of Patients": 150,
+                "time": "01/01/2019 12:00",
+                "stat_level": "Normal"
+            }
+        },
+        {
+            "replay_type": "Tag Movement",
+            "replay_data": {
+                "tag_id": "1",
+                "tag": "John",
+                "icon": "patient.svg",
+                "popup_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+                "time": "01/01/2019 11:30",
+                "x": "150",
+                "y": "276",
+                "zone": "area"
+            }
+        }
+    ]
+}
