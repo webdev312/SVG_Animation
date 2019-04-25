@@ -1,4 +1,4 @@
-const TIME_FRAME_10MIN = 100;
+const TIME_FRAME_10MIN = 200;
 
 (function () {
 	function El(a) { return document.querySelector(a); }
@@ -14,7 +14,7 @@ const TIME_FRAME_10MIN = 100;
 	}
 
 	// Create Element by ID
-	function createElement(data_Term){
+	function createIcon(data_Term){
 		let str_tag = replaceAll(data_Term.replay_data.tag, " ", "_");
 		let str_icon = "/svg/" + replaceAll(data_Term.replay_data.icon, " ", "_");
 
@@ -27,22 +27,37 @@ const TIME_FRAME_10MIN = 100;
 			imageIcon.setAttribute('x', parseInt(data_Term.replay_data.x) - 7);
 			imageIcon.setAttribute('y', parseInt(data_Term.replay_data.y) - 14);
 
+		let pathLine = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
+			pathLine.setAttribute('points', data_Term.replay_data.x + ', ' + data_Term.replay_data.y + ', ' + data_Term.replay_data.x + ', ' + data_Term.replay_data.y + '');
+			pathLine.setAttribute('id', 'path_' + str_tag);
+			pathLine.setAttribute('stroke', '#455');
+			pathLine.setAttribute('opacity', '0');
+			pathLine.setAttribute('stroke-linecap', 'round');
+			pathLine.setAttribute('stroke-width', '3');
+
+		El('#icon_path').appendChild(pathLine);
 		El('#icon_location').appendChild(imageIcon);
 	}
 
 	var arr_st_Anime = [];
 
 	function doTest(arr_Data, n_speed){
+		var initX = -999;
+		var initY = -999;
 		var prevX = -999;
 		var prevY = -999;
 		for (let i = 0; i < arr_Data.length; i ++){
 			if (arr_Data[i].replay_type != "Tag Movement") continue;
 
 			let str_tag = replaceAll(arr_Data[i].replay_data.tag, " ", "_");
-			if ($('#icon_' + str_tag).length == 0) createElement(arr_Data[i]);
+			if ($('#icon_' + str_tag).length == 0) createIcon(arr_Data[i]);
 
+			if (initX == -999) initX = arr_Data[i].replay_data.x * 1;
+			if (initY == -999) initY = arr_Data[i].replay_data.y * 1;
 			if (prevX == -999) prevX = arr_Data[i].replay_data.x * 1;
 			if (prevY == -999) prevY = arr_Data[i].replay_data.y * 1;
+
+			// createPath(prevX, prevY, arr_Data[i].replay_data.x*1, arr_Data[i].replay_data.y*1, 'path_' + arr_Data[i].replay_data.tag + arr_st_Anime.length);
 
 			// Use time difference to calculate delay
 			let move_time = moment(arr_Data[i].replay_data.time, "MM/DD/YYYY hh:mm");
@@ -50,25 +65,54 @@ const TIME_FRAME_10MIN = 100;
 
 			let st_Anime = {
 				targets: '#icon_John',
-				translateX: arr_Data[i].replay_data.x*1 - prevX,
-				translateY: arr_Data[i].replay_data.y*1 - prevY,
+				translateX: arr_Data[i].replay_data.x*1 - initX,
+				translateY: arr_Data[i].replay_data.y*1 - initY,
 				duration: n_duration*2,
 				opacity: 1,
 				easing: 'linear',
 				autoplay: true,
 			}
 
+			let st_Path = {
+				targets: '#path_John',
+				easing: 'linear',
+				points: [
+					{ value: prevX + ', ' + prevY + ', ' + arr_Data[i].replay_data.x + ', ' + arr_Data[i].replay_data.y}
+				],
+				duration: n_duration*2,
+				opacity: 1,
+				autoplay: true,
+			}
+
 			let st_move = {
 				anime : st_Anime,
+				path : st_Path,
 				data : arr_Data[i]
 			}
 			arr_st_Anime.push(st_move);
+
+			prevX = arr_Data[i].replay_data.x * 1;
+			prevY = arr_Data[i].replay_data.y * 1;
 		}
+	}
+
+	function ResetPath(id, x, y){
+		anime({
+			targets: id,
+			easing: 'linear',
+			points: [
+				{ value: x + ', ' + y + ', ' + x + ', ' + y}
+			],
+			duration: 200,
+			opacity: 0,
+			autoplay: true,
+		});
 	}
 
 	function MoveEngine(){
 		if (arr_st_Anime.length > 0){
 			let cur_anime = arr_st_Anime[0].anime;
+			let cur_path = arr_st_Anime[0].path;
 			let x = arr_st_Anime[0].data.replay_data.x*1;
 			let y = arr_st_Anime[0].data.replay_data.y*1;
 			let time = arr_st_Anime[0].data.replay_data.time;
@@ -76,22 +120,24 @@ const TIME_FRAME_10MIN = 100;
 			cur_anime.complete = function(){
 				createCircle(x, y);
 				createMoveDesc(x, y, time, zone);
+				ResetPath(cur_path.targets, x, y);
 			};
 			
 			arr_st_Anime.shift();
 
 			anime(cur_anime);
+			anime(cur_path);
 		}
 	}
 
 	function createCircle(x, y){
 		let pathDot = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-			 pathDot.setAttribute('cx', x);
-			 pathDot.setAttribute('cy', y);
-			 pathDot.setAttribute('r', 4);
-			 pathDot.setAttribute('fill', "#f98");
-			 pathDot.setAttribute('stroke', "#455");
-			 pathDot.setAttribute('stroke-width', 3);
+			pathDot.setAttribute('cx', x);
+			pathDot.setAttribute('cy', y);
+			pathDot.setAttribute('r', 4);
+			pathDot.setAttribute('fill', "#f98");
+			pathDot.setAttribute('stroke', "#455");
+			pathDot.setAttribute('stroke-width', 3);
 
 		El('#markers').appendChild(pathDot);
 	}
