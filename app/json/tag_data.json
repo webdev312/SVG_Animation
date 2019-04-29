@@ -1,80 +1,115 @@
 {
     "tagData": [
         {
-            "replay_type": "Tag Movement",
-            "replay_data": {
+            "command_type": "Tag Movement",
+            "command_data": {
                 "tag_id": "1",
                 "tag": "John",
                 "icon": "patient.svg",
-                "popup_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
+                "popup_text": "<div>Patient : John Doe</div><p>Length of stay : 340 Minutes.</p>",
                 "time": "01/01/2019 10:20",
-                "x": "220",
-                "y": "154",
+                "from_x": "220",
+                "from_y": "154",
+                "zone": "registration",
+                "to_x": "220",
+                "to_y": "154",
                 "zone": "registration"
             }
         },
         {
-            "replay_type": "Tag alert",
-            "replay_data": {
+            "command_type": "Tag Movement",
+            "command_data": {
                 "tag_id": "1",
                 "tag": "John",
-                "alert_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
-                "time": "01/01/2019 10:20",
-                "alert_type": "Patient waiting"
+                "icon": "patient.svg",
+                "popup_text": "<div>Patient : John Doe</div><p>Length of stay : 340 Minutes.</p>",
+                "time": "01/01/2019 10:25",
+                "from_x": "220",
+                "from_y": "154",
+                "zone": "Registration",
+                "to_x": "220",
+                "to_y": "250",
+                "zone": "Triage"
             }
         },
         {
-            "replay_type": "Tag stats",
-            "replay_data": {
+            "command_type": "Tag alert",
+            "command_data": {
+                "tag_id": "1",
+                "zone_id": 12,
+                "zone": "Room 1",
+                "tag": "John",
+                "alert_text": "<div>Patient in Room</div><p>Room to nurse : 6 Mins.</p>",
+                "time": "01/01/2019 10:30",
+                "alert_type": "patient in room",
+                "zone_color": "green"
+            }
+        },
+        {
+            "command_type": "Tag Movement",
+            "command_data": {
+                "tag_id": "1",
+                "tag": "John",
+                "icon": "patient.svg",
+                "popup_text": "<div>Patient : John Doe</div><p>Length of stay : 340 Minutes.</p>",
+                "time": "01/01/2019 10:30",
+                "from_x": "220",
+                "from_y": "250",
+                "zone": "Triage",
+                "to_x": "270",
+                "to_y": "250",
+                "zone": "Room 1"
+            }
+        },
+        {
+            "command_type": "Tag alert",
+            "command_data": {
+                "tag_id": "1",
+                "zone_id": 12,
+                "zone": "Room 1",
+                "tag": "John",
+                "alert_text": "<div>Nurse in Room</div><p>Room to nurse : 6 Mins.</p>",
+                "time": "01/01/2019 10:35",
+                "alert_type": "nurse in room",
+                "zone_color": "orange"
+            }
+        },
+        {
+            "command_type": "Tag Movement",
+            "command_data": {
+                "tag_id": "1",
+                "tag": "John",
+                "icon": "patient.svg",
+                "popup_text": "<div>Patient : John Doe</div><p>Length of stay : 340 Minutes.</p>",
+                "time": "01/01/2019 11:00",
+                "from_x": "270",
+                "from_y": "250",
+                "zone": "Room 1",
+                "to_x": "270",
+                "to_y": "154",
+                "zone": "Discharge"
+            }
+        },
+        {
+            "command_type": "Tag alert",
+            "command_data": {
+                "tag_id": "1",
+                "zone_id": 12,
+                "zone": "Room 1",
+                "tag": "John",
+                "alert_text": "<div>Patient left room</div><p>Stay in room : 45 Mins.</p>",
+                "time": "01/01/2019 10:35",
+                "alert_type": "patient room",
+                "zone_color": "none"
+            }
+        },
+        {
+            "command_type": "Tag stats",
+            "command_data": {
                 "stat_type": "No of patients",
                 "number of Patients": 150,
                 "time": "01/01/2019 12:00",
                 "stat_level": "Normal"
-            }
-        },
-        {
-            "replay_type": "Tag Movement",
-            "replay_data": {
-                "tag_id": "1",
-                "tag": "John",
-                "icon": "patient.svg",
-                "popup_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
-                "time": "01/01/2019 10:50",
-                "x": "220",
-                "y": "256",
-                "zone": "area"
-            }
-        },
-        {
-            "replay_type": "Tag alert",
-            "replay_data": {
-                "tag_id": "1",
-                "tag": "John",
-                "alert_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
-                "time": "01/01/2019 11:10",
-                "alert_type": "nurse in room"
-            }
-        },
-        {
-            "replay_type": "Tag stats",
-            "replay_data": {
-                "stat_type": "No of patients",
-                "number of Patients": 150,
-                "time": "01/01/2019 12:00",
-                "stat_level": "Normal"
-            }
-        },
-        {
-            "replay_type": "Tag Movement",
-            "replay_data": {
-                "tag_id": "1",
-                "tag": "John",
-                "icon": "patient.svg",
-                "popup_text": "<h2>Hello world!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>",
-                "time": "01/01/2019 11:30",
-                "x": "150",
-                "y": "276",
-                "zone": "area"
             }
         }
     ]
