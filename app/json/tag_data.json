@@ -56,8 +56,8 @@
                 "from_x": "220",
                 "from_y": "250",
                 "zone": "Triage",
-                "to_x": "270",
-                "to_y": "250",
+                "to_x": "170",
+                "to_y": "280",
                 "zone": "Room 1"
             }
         },
@@ -82,8 +82,8 @@
                 "icon": "patient.svg",
                 "popup_text": "<div>Patient : John Doe</div><p>Length of stay : 340 Minutes.</p>",
                 "time": "01/01/2019 11:00",
-                "from_x": "270",
-                "from_y": "250",
+                "from_x": "170",
+                "from_y": "280",
                 "zone": "Room 1",
                 "to_x": "270",
                 "to_y": "154",

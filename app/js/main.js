@@ -128,7 +128,7 @@ var g_isFocus = true;
 			let zone = g_arr_st_MoveAnime[0].data.command_data.zone;
 			cur_anime.complete = function(){
 				createCircle(x, y);
-				// createMoveDesc(x, y, time, zone);
+				createMoveDesc(x, y, time, zone);
 				ResetPath(cur_path.targets, x, y);
 			};
 			
@@ -147,7 +147,9 @@ var g_isFocus = true;
 			let x = g_arr_st_AlertAnime[0].x;
 			let y = g_arr_st_AlertAnime[0].y;
 			alert.complete = function(){
-				ResetAlert(id, x, y);
+				setTimeout(() => {
+					ResetAlert(id, x, y);
+				}, TIME_FRAME_10MIN * 10);
 			}
 			anime(alert);
 			g_arr_st_AlertAnime.shift();
