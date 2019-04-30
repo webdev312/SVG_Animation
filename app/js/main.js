@@ -133,7 +133,7 @@ function MoveEngine(){
 		let cur_path = g_arr_st_MoveAnime[0].path;
 		let x = g_arr_st_MoveAnime[0].data.command_data.to_x*1;
 		let y = g_arr_st_MoveAnime[0].data.command_data.to_y*1;
-		let time = g_arr_st_MoveAnime[0].data.command_data.time;
+		let time = g_arr_st_MoveAnime[0].data.command_data.from_time;
 		let zone = g_arr_st_MoveAnime[0].data.command_data.zone;
 		cur_anime.complete = function(){
 			createCircle(x, y);
