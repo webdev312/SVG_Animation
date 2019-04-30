@@ -1,16 +1,49 @@
 {
     "tagData": [
         {
+            "command_type": "Tag stats",
+            "command_data": {
+                "stat_type": "No of patients",
+                "number of Patients": 125,
+                "time": "01/01/2019 10:00",
+                "stat_level": "Normal"
+            }
+        },
+        {
+            "command_type": "Tag stats",
+            "command_data": {
+                "stat_type": "Length of stay",
+                "stat_values": [
+                    {
+                        "hour": "8 AM",
+                        "length_of_stay": "221",
+                        "stat_level": "Normal"
+                    },
+                    {
+                        "hour": "9 AM",
+                        "length_of_stay": "256",
+                        "stat_level": "Normal"
+                    },
+                    {
+                        "hour": "10 AM",
+                        "length_of_stay": "275",
+                        "stat_level": "High"
+                    }
+                ]
+            }
+        },
+        {
             "command_type": "Tag Movement",
             "command_data": {
                 "tag_id": "1",
                 "tag": "John",
                 "icon": "patient.svg",
                 "popup_text": "<div>Patient : John Doe</div><p>Length of stay : 340 Minutes.</p>",
-                "time": "01/01/2019 10:20",
+                "from_time": "01/01/2019 10:20",
                 "from_x": "220",
                 "from_y": "154",
                 "zone": "registration",
+                "to_time": "01/01/2019 10:22",
                 "to_x": "220",
                 "to_y": "154",
                 "zone": "registration"
@@ -23,12 +56,13 @@
                 "tag": "John",
                 "icon": "patient.svg",
                 "popup_text": "<div>Patient : John Doe</div><p>Length of stay : 340 Minutes.</p>",
-                "time": "01/01/2019 10:25",
+                "from_time": "01/01/2019 10:25",
                 "from_x": "220",
                 "from_y": "154",
                 "zone": "Registration",
-                "to_x": "220",
-                "to_y": "250",
+                "to_time": "01/01/2019 10:27",
+                "to_x": "245",
+                "to_y": "312",
                 "zone": "Triage"
             }
         },
@@ -52,12 +86,13 @@
                 "tag": "John",
                 "icon": "patient.svg",
                 "popup_text": "<div>Patient : John Doe</div><p>Length of stay : 340 Minutes.</p>",
-                "time": "01/01/2019 10:30",
-                "from_x": "220",
-                "from_y": "250",
+                "from_time": "01/01/2019 10:30",
+                "from_x": "245",
+                "from_y": "312",
                 "zone": "Triage",
-                "to_x": "170",
-                "to_y": "280",
+                "to_time": "01/01/2019 10:32",
+                "to_x": "187",
+                "to_y": "309",
                 "zone": "Room 1"
             }
         },
@@ -81,12 +116,13 @@
                 "tag": "John",
                 "icon": "patient.svg",
                 "popup_text": "<div>Patient : John Doe</div><p>Length of stay : 340 Minutes.</p>",
-                "time": "01/01/2019 11:00",
-                "from_x": "170",
-                "from_y": "280",
+                "from_time": "01/01/2019 11:00",
+                "from_x": "187",
+                "from_y": "309",
                 "zone": "Room 1",
-                "to_x": "270",
-                "to_y": "154",
+                "to_time": "01/01/2019 11:02",
+                "to_x": "209",
+                "to_y": "189",
                 "zone": "Discharge"
             }
         },
@@ -98,7 +134,7 @@
                 "zone": "Room 1",
                 "tag": "John",
                 "alert_text": "<div>Patient left room</div><p>Stay in room : 45 Mins.</p>",
-                "time": "01/01/2019 10:35",
+                "time": "01/01/2019 11:35",
                 "alert_type": "patient room",
                 "zone_color": "none"
             }
@@ -108,8 +144,31 @@
             "command_data": {
                 "stat_type": "No of patients",
                 "number of Patients": 150,
-                "time": "01/01/2019 12:00",
-                "stat_level": "Normal"
+                "time": "01/01/2019 11:00",
+                "stat_level": "High"
+            }
+        },
+        {
+            "command_type": "Tag stats",
+            "command_data": {
+                "stat_type": "Length of stay",
+                "stat_values": [
+                    {
+                        "hour": "9 AM",
+                        "length_of_stay": "256",
+                        "stat_level": "Normal"
+                    },
+                    {
+                        "hour": "10 AM",
+                        "length_of_stay": "275",
+                        "stat_level": "Normal"
+                    },
+                    {
+                        "hour": "11 AM",
+                        "length_of_stay": "312",
+                        "stat_level": "High"
+                    }
+                ]
             }
         }
     ]
