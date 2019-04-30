@@ -25,6 +25,7 @@ function sortByTimeframe(a, b){
 
 var g_arr_st_MoveAnime = [];
 var g_arr_st_AlertAnime = [];
+var g_arr_st_TagAnime = [];
 var g_nIntervalID;
 
 function process_Tags(arr_Data, n_speed){
@@ -97,8 +98,13 @@ function process_Tags(arr_Data, n_speed){
 			}
 
 			g_arr_st_AlertAnime.push(st_alert);
+		}else if (arr_Data[i].command_type == "Tag stats"){
+			if (arr_Data[i].command_data.stat_type == "No of patients"){
+				g_arr_st_TagAnime.push(arr_Data[i]);
+			}
 		}
 	}
+	console.log(g_arr_st_TagAnime);
 }
 
 function ResetPath(id, x, y){
@@ -164,6 +170,21 @@ function AlertEngine(){
 	}
 }
 
+function StateEngine(){
+	if (g_arr_st_TagAnime.length > 0){
+		let patients = g_arr_st_TagAnime[0].command_data["number of Patients"];
+		$("#patients").html(patients);
+		
+		let strOnTime = $("#ontimestarts").html();
+		if (strOnTime == "0/0"){
+			$("#ontimestarts").html(patients + "/" + patients);
+		}else{
+			$("#ontimestarts").html(strOnTime.replace(/.*\//, patients+"/"));
+		}
+		g_arr_st_TagAnime.shift();
+	}
+}
+
 function runTime(n_mins, n_speed){
 	$('#cur_time').text($('#datetimepicker1').val());
 
@@ -197,6 +218,13 @@ function IsAvailableMotion(cur_time, n_speed){
 			AlertEngine();
 		}
 	}
+
+	if (g_arr_st_TagAnime.length > 0){
+		stat_time = moment(g_arr_st_TagAnime[0].command_data.time, "MM/DD/YYYY hh:mm");
+		if (stat_time - current_time == 0){
+			StateEngine();
+		}
+	}
 }
 
 function onInit(){
@@ -204,7 +232,7 @@ function onInit(){
 	var json_Sorted_Data = json_Data.tagData.sort(sortByTimeframe);
 
 	$('#datetimepicker1').datetimepicker();
-	$('#datetimepicker1').val('01/01/2019 10:10 AM');
+	$('#datetimepicker1').val('01/01/2019 09:50 AM');
 	$('#datetimepicker2').datetimepicker();
 	$('#datetimepicker2').val('01/01/2019 11:40 AM');
 
