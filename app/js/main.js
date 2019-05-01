@@ -26,6 +26,7 @@ function sortByTimeframe(a, b){
 var g_arr_st_MoveAnime = [];
 var g_arr_st_AlertAnime = [];
 var g_arr_st_TagAnime = [];
+var g_arr_st_ChartAnime = [];
 var g_nIntervalID;
 
 function process_Tags(arr_Data, n_speed){
@@ -101,10 +102,13 @@ function process_Tags(arr_Data, n_speed){
 		}else if (arr_Data[i].command_type == "Tag stats"){
 			if (arr_Data[i].command_data.stat_type == "No of patients"){
 				g_arr_st_TagAnime.push(arr_Data[i]);
+			}else if (arr_Data[i].command_data.stat_type == "Length of stay"){
+				for (let n = 0; n < arr_Data[i].command_data.stat_values.length; n ++)
+					g_arr_st_ChartAnime.push(arr_Data[i].command_data.stat_values[n]);
 			}
 		}
 	}
-	console.log(g_arr_st_TagAnime);
+	drawChartLos(g_arr_st_ChartAnime);
 }
 
 function ResetPath(id, x, y){

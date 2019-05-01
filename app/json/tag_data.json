@@ -154,17 +154,17 @@
                 "stat_type": "Length of stay",
                 "stat_values": [
                     {
-                        "hour": "9 AM",
+                        "hour": "12 PM",
                         "length_of_stay": "256",
                         "stat_level": "Normal"
                     },
                     {
-                        "hour": "10 AM",
+                        "hour": "1 PM",
                         "length_of_stay": "275",
                         "stat_level": "Normal"
                     },
                     {
-                        "hour": "11 AM",
+                        "hour": "2 PM",
                         "length_of_stay": "312",
                         "stat_level": "High"
                     }
