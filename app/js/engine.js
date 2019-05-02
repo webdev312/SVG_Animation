@@ -76,7 +76,7 @@ function createAlert(strid, x, y, time, text){
 
     let alerts = d3.select("#alerts");
     let alertText = alerts.append('foreignObject')
-    .attr('id', strid)
+    .attr('id', strid + "_foreign")
     .attr('opacity', 0)
     .attr('text-anchor', 'middle')
     .attr('font-size', '6px')
@@ -86,7 +86,4 @@ function createAlert(strid, x, y, time, text){
     .attr('height', '90px');
     let div = alertText.append('xhtml:div')
         .append('div').html(text);
-
-    // let bbox = alertText.getBBox();
-    // console.log(bbox);
 }
