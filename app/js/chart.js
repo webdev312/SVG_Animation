@@ -1,6 +1,6 @@
 function losChart(strID){
     // 2. Use the margin convention practice 
-    var margin = {top: 50, right: 50, bottom: 50, left: 50}
+    var margin = {top: 50, right: 70, bottom: 50, left: 70}
     , width = window.innerWidth / 100 * 40 - margin.left - margin.right - 20 // Use the window's width 
     , height = window.innerWidth / 100 * 20 - margin.top - margin.bottom; // Use the window's height
 
@@ -27,6 +27,11 @@ function losChart(strID){
     .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
     .y(function(d) { return yScale(d.y); }) // set the y values for the line generator 
     .curve(d3.curveMonotoneX) // apply smoothing to the line
+
+    function make_y_gridlines() {
+        return d3.axisLeft(yScale)
+            .ticks(4)
+    }
 
     // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
     var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } });
@@ -60,6 +65,33 @@ function losChart(strID){
     .datum(dataset1) // 10. Binds data to the line 
     .attr("class", "line1") // Assign a class for styling 
     .attr("d", line2); // 11. Calls the line generator 
+
+    svg.append("text")
+    .attr("x", width / 2 - 100)
+    .attr("y", -20)
+    .text("ROOM TURNOVER TIME")
+
+    svg.append("text")
+    .attr("x", -height / 2 - 50)
+    .attr("y", width + 40)
+    .attr("font-size", "12px")
+    .text("Average LOS (Green)")
+    .attr("transform", "rotate(270)")
+
+    svg.append("text")
+    .attr("x", -height / 2 - 50)
+    .attr("y", -40)
+    .attr("font-size", "12px")
+    .text("Patient LOS (Blue)")
+    .attr("transform", "rotate(270)")
+
+    svg.append("g")
+  		.attr("class","grid")
+  		.style("stroke-dasharray",("3,3"))
+  		.call(make_y_gridlines()
+            .tickSize(-width)
+            .tickFormat("")
+        )
 }
 
 function drawChartLos(data){
@@ -91,7 +123,7 @@ function drawChartLos(data){
     function make_y_gridlines() {
         return d3.axisLeft(yScale)
             .ticks(4)
-      }
+    }
 
     // 7. d3's line generator
     var line1 = d3.line()
@@ -142,7 +174,7 @@ function drawChartLos(data){
     .attr("x", -height / 2 - 50)
     .attr("y", -40)
     .attr("font-size", "12px")
-    .text("Patient LOS (Green)")
+    .text("Patient LOS (Blue)")
     .attr("transform", "rotate(270)")
 
     svg.append("g")
@@ -151,7 +183,7 @@ function drawChartLos(data){
   		.call(make_y_gridlines()
             .tickSize(-width)
             .tickFormat("")
-         )
+        )
 }
 
 (function(){
