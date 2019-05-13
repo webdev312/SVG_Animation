@@ -1,4 +1,4 @@
-const TIME_FRAME_1MIN = 100;
+const TIME_FRAME_1MIN = 200;
 var g_isFocus = true;
 var g_allData = {"TagList": [], "MoveList": {}, "AlertList": {}};
 var g_allAnimeData = {"MoveList": {}, "AlertList": {}};
@@ -183,16 +183,25 @@ function process_Tags(arr_Data, n_speed){
 	}
 }
 
-function ResetPath(id, x, y){
+function ResetPath(id, x, y, time){
 	anime({
 		targets: id,
 		easing: 'linear',
-		points: [
-			{ value: x + ', ' + y + ', ' + x + ', ' + y}
-		],
-		duration: TIME_FRAME_1MIN,
+		duration: TIME_FRAME_1MIN * time / 2,
 		opacity: 0,
 		autoplay: true,
+		complete: function(){
+			anime({
+				targets: id,
+				easing: 'linear',
+				points: [
+					{ value: x + ', ' + y + ', ' + x + ', ' + y}
+				],
+				duration: 0,
+				opacity: 0,
+				autoplay: true
+			});
+		}
 	});
 }
 
@@ -216,13 +225,16 @@ function MoveEngine(moveData){
 	let y = moveData.data.command_data.to_y*1;
 	let time = moveData.data.command_data.from_time;
 	let zone = moveData.data.command_data.zone;
+	let from_time = moment(moveData.data.command_data.from_time, "YYYY-MM-DD hh:mm:ss");
+	let to_time = moment(moveData.data.command_data.to_time, "YYYY-MM-DD hh:mm:ss");
+	let diff_time = (to_time - from_time) / 1000 / 60;
 
 	let is_discharge = (moveData.data.command_data.sequence == "DISCHARGE") ? 1 : 0;
 	let patient_id = moveData.data.command_data["patient_id"];
 	cur_anime.complete = function(){
 		createCircle(patient_id, x, y);
 		// createMoveDesc(x, y, time, zone);
-		ResetPath(cur_path.targets, x, y);
+		ResetPath(cur_path.targets, x, y, diff_time);
 		if (is_discharge){
 			setTimeout(() => {
 				remove_all_by_id(patient_id);
