@@ -1,5 +1,6 @@
-function createCircle(x, y){
+function createCircle(id, x, y){
     let pathDot = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+        pathDot.setAttribute('class', 'circle_' + id);
         pathDot.setAttribute('cx', x);
         pathDot.setAttribute('cy', y);
         pathDot.setAttribute('r', 4);
@@ -33,7 +34,7 @@ function createMoveDesc(x, y, time, zone){
 
 // Create Element by ID
 function createIcon(data_Term){
-    let str_tag = replaceAll(data_Term.command_data.tag, " ", "_");
+    let str_tag = replaceAll(data_Term.command_data["patient_id"], " ", "_");
     let str_icon = "/svg/" + replaceAll(data_Term.command_data.icon, " ", "_");
 
     let imageIcon = document.createElementNS("http://www.w3.org/2000/svg", 'image');
@@ -41,7 +42,7 @@ function createIcon(data_Term){
         imageIcon.setAttribute('id', 'icon_' + str_tag);
         imageIcon.setAttribute('width', '30');
         imageIcon.setAttribute('height', '30');
-        imageIcon.setAttribute('opacity', '0');
+        imageIcon.setAttribute('opacity', '1');
         imageIcon.setAttribute('x', parseInt(data_Term.command_data.from_x) - 15);
         imageIcon.setAttribute('y', parseInt(data_Term.command_data.from_y) - 26);
 
@@ -49,7 +50,7 @@ function createIcon(data_Term){
         pathLine.setAttribute('points', data_Term.command_data.from_x + ', ' + data_Term.command_data.from_y + ', ' + data_Term.command_data.from_x + ', ' + data_Term.command_data.from_y + '');
         pathLine.setAttribute('id', 'path_' + str_tag);
         pathLine.setAttribute('stroke', '#455');
-        pathLine.setAttribute('opacity', '0');
+        pathLine.setAttribute('opacity', '1');
         pathLine.setAttribute('stroke-linecap', 'round');
         pathLine.setAttribute('stroke-width', '3');
 
@@ -86,4 +87,16 @@ function createAlert(strid, x, y, time, text){
     .attr('height', '90px');
     let div = alertText.append('xhtml:div')
         .append('div').html(text);
+}
+
+function remove_all_by_id(strid){
+    $("#icon_" + strid).remove();
+    $(".circle_" + strid).remove();
+    $("#path_" + strid).remove();
+    $("#alert_" + strid + "_0").remove();
+    $("#alert_" + strid + "_0_foreign").remove();
+    $("#alert_" + strid + "_1").remove();
+    $("#alert_" + strid + "_1_foreign").remove();
+    $("#alert_" + strid + "_2").remove();
+    $("#alert_" + strid + "_2_foreign").remove();
 }

@@ -33,7 +33,7 @@
             }
         },
         {
-            "command_type": "Tag Movement",
+            "command_type": "Tag movement",
             "command_data": {
                 "tag_id": "1",
                 "tag": "John",
@@ -50,7 +50,7 @@
             }
         },
         {
-            "command_type": "Tag Movement",
+            "command_type": "Tag movement",
             "command_data": {
                 "tag_id": "1",
                 "tag": "Michael",
@@ -67,7 +67,7 @@
             }
         },
         {
-            "command_type": "Tag Movement",
+            "command_type": "Tag movement",
             "command_data": {
                 "tag_id": "1",
                 "tag": "John",
@@ -97,7 +97,7 @@
             }
         },
         {
-            "command_type": "Tag Movement",
+            "command_type": "Tag movement",
             "command_data": {
                 "tag_id": "1",
                 "tag": "John",
@@ -127,7 +127,7 @@
             }
         },
         {
-            "command_type": "Tag Movement",
+            "command_type": "Tag movement",
             "command_data": {
                 "tag_id": "1",
                 "tag": "John",

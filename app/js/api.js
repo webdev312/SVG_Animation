@@ -1,7 +1,7 @@
 function getAllData(){
     var ret = {};
     $.ajax({
-        url: '/json/tag_data.json',
+        url: '/json/data.json',
         async: false,
         type: 'GET',
         dataType: 'JSON',

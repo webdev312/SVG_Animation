@@ -97,9 +97,18 @@ function losChart(strID){
 function drawChartLos(data){
     var timeframe = [];
     var dataframe = [];
+    var averageframe = [];
     for (var i = 0; i < data.length; i ++){
-        timeframe[i] = data[i].hour;
-        dataframe[i] = data[i].length_of_stay;
+        let time_chart = moment(data[i]["time"], "YYYY-MM-DD hh:mm:ss");
+        timeframe[i] = time_chart.hours();
+        dataframe[i] = data[i]["length of stay"];
+    }
+    for (var i = 0; i < dataframe.length; i ++){
+        var sum = 0;
+        for (var j = 0; j <= i; j ++){
+            sum += dataframe[j];
+        }
+        averageframe[i] = (i == 0) ? 0 : sum / i;
     }
     
     // 2. Use the margin convention practice 
@@ -131,8 +140,14 @@ function drawChartLos(data){
     .y(function(d) { return yScale(d.y); }) // set the y values for the line generator 
     .curve(d3.curveMonotoneX) // apply smoothing to the line
 
+    var line2 = d3.line()
+    .x(function(d, i) { return xScale(d.x); }) // set the x values for the line generator
+    .y(function(d) { return yScale(d.y); }) // set the y values for the line generator 
+    .curve(d3.curveMonotoneX) // apply smoothing to the line
+
     // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-    var dataset = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": dataframe[i] } });
+    var dataset1 = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": dataframe[i] } });
+    var dataset2 = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": averageframe[i] } });
 
     // 1. Add the SVG to the page and employ #2
     var svg = d3.select("#len_stay").append("svg")
@@ -154,9 +169,14 @@ function drawChartLos(data){
 
     // 9. Append the path, bind the data, and call the line generator 
     svg.append("path")
-    .datum(dataset) // 10. Binds data to the line 
+    .datum(dataset1) // 10. Binds data to the line 
+    .attr("class", "line1") // Assign a class for styling 
+    .attr("d", line1); // 11. Calls the line generator
+
+    svg.append("path")
+    .datum(dataset2) // 10. Binds data to the line 
     .attr("class", "line") // Assign a class for styling 
-    .attr("d", line1); // 11. Calls the line generator 
+    .attr("d", line2); // 11. Calls the line generator
 
     svg.append("text")
     .attr("x", width / 2 - 100)
