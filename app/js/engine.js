@@ -39,7 +39,7 @@ function createMoveDesc(x, y, time, zone){
     .attr('width', '90px')
     .attr('height', '90px');
     let div = alertText.append('xhtml:div')
-        .append('div').html(text);
+        .append('div').html(time);
     // let pointText = document.createElementNS("http://www.w3.org/2000/svg", 'text');
     // pointText.setAttribute('x', x + 7);
     // pointText.setAttribute('y', y);

@@ -255,11 +255,21 @@ function AlertEngine(alertData){
 	origin_x = origin_x*1 + tran_data[4]*1;
 	origin_y = origin_y*1 + tran_data[5]*1;
 
-	// move alert element by id
-	$(alertData.id).attr("x", origin_x + 13);
-	$(alertData.id).attr("y", origin_y + 27);
-	$(alertData.id + "_foreign").attr("x", origin_x + 19);
-	$(alertData.id + "_foreign").attr("y", origin_y + 32);
+	if (alertData.data.alert_type == "patient in registration" || 
+	alertData.data.alert_type == "patient in triage" || 
+	alertData.data.alert_type == "patient in image" || 
+	alertData.data.alert_type == "patient in discharge"){
+		$(alertData.id).attr("x", alertData.data.x);
+		$(alertData.id).attr("y", alertData.data.y);
+		$(alertData.id + "_foreign").attr("x", alertData.data.x + 8);
+		$(alertData.id + "_foreign").attr("y", alertData.data.y + 6);
+	}else{
+		// move alert element by id
+		$(alertData.id).attr("x", origin_x + 13);
+		$(alertData.id).attr("y", origin_y + 27);
+		$(alertData.id + "_foreign").attr("x", origin_x + 19);
+		$(alertData.id + "_foreign").attr("y", origin_y + 32);	
+	}
 
 	// start alert animation
 	let alert = alertData.alert;
