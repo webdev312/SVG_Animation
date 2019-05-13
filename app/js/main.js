@@ -1,4 +1,4 @@
-const TIME_FRAME_1MIN = 200;
+const TIME_FRAME_1MIN = 100;
 var g_isFocus = true;
 var g_allData = {"TagList": [], "MoveList": {}, "AlertList": {}};
 var g_allAnimeData = {"MoveList": {}, "AlertList": {}};
