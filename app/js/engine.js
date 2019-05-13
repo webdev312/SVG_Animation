@@ -42,7 +42,7 @@ function createIcon(data_Term){
         imageIcon.setAttribute('id', 'icon_' + str_tag);
         imageIcon.setAttribute('width', '30');
         imageIcon.setAttribute('height', '30');
-        imageIcon.setAttribute('opacity', '1');
+        imageIcon.setAttribute('opacity', '0');
         imageIcon.setAttribute('x', parseInt(data_Term.command_data.from_x) - 15);
         imageIcon.setAttribute('y', parseInt(data_Term.command_data.from_y) - 26);
 
@@ -50,7 +50,7 @@ function createIcon(data_Term){
         pathLine.setAttribute('points', data_Term.command_data.from_x + ', ' + data_Term.command_data.from_y + ', ' + data_Term.command_data.from_x + ', ' + data_Term.command_data.from_y + '');
         pathLine.setAttribute('id', 'path_' + str_tag);
         pathLine.setAttribute('stroke', '#455');
-        pathLine.setAttribute('opacity', '1');
+        pathLine.setAttribute('opacity', '0');
         pathLine.setAttribute('stroke-linecap', 'round');
         pathLine.setAttribute('stroke-width', '3');
 
