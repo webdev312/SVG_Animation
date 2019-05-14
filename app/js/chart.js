@@ -95,6 +95,8 @@ function losChart(strID){
 }
 
 function drawChartLos(data){
+    $("#len_stay").empty();
+
     var timeframe = [];
     var dataframe = [];
     var averageframe = [];

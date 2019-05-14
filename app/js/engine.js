@@ -1,13 +1,22 @@
 function createCircle(id, x, y){
+    let pathDotOutter = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+        pathDotOutter.setAttribute('class', 'circle_' + id);
+        pathDotOutter.setAttribute('cx', x);
+        pathDotOutter.setAttribute('cy', y);
+        pathDotOutter.setAttribute('r', 6);
+        pathDotOutter.setAttribute('fill', "#455");
+        pathDotOutter.setAttribute('opacity', "0.4");
+
     let pathDot = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
         pathDot.setAttribute('class', 'circle_' + id);
         pathDot.setAttribute('cx', x);
         pathDot.setAttribute('cy', y);
-        pathDot.setAttribute('r', 4);
-        pathDot.setAttribute('fill', "#f98");
-        pathDot.setAttribute('stroke', "#455");
-        pathDot.setAttribute('stroke-width', 3);
+        pathDot.setAttribute('r', 3);
+        pathDot.setAttribute('fill', "green");
+        pathDot.setAttribute('stroke', "#FFF");
+        pathDot.setAttribute('stroke-width', "1px");
 
+    El('#markers').appendChild(pathDotOutter);
     El('#markers').appendChild(pathDot);
 }
 
@@ -91,13 +100,13 @@ function createAlert(strid, x, y, time, text){
     let alertRect = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
     alertRect.setAttribute('x', x);
     alertRect.setAttribute('y', y);
-    alertRect.setAttribute('width', 100);
-    alertRect.setAttribute('height', 30);
+    alertRect.setAttribute('width', 80);
+    alertRect.setAttribute('height', 25);
     alertRect.setAttribute('rx', 4);
     alertRect.setAttribute('ry', 4);
     alertRect.setAttribute('stroke-width', 1);
     alertRect.setAttribute('fill', 'white');
-    alertRect.setAttribute('stroke', 'black');
+    alertRect.setAttribute('stroke', 'green');
     alertRect.setAttribute('class', 'point_rect');
     alertRect.setAttribute('id', strid);
     alertRect.setAttribute('opacity', 0);
@@ -118,6 +127,22 @@ function createAlert(strid, x, y, time, text){
         .append('div').html(text);
 }
 
+function createPump(strID, x, y){
+    let str_tag = replaceAll(strID, " ", "_");
+    let str_icon = "/svg/pump_icon.svg";
+
+    let imageIcon = document.createElementNS("http://www.w3.org/2000/svg", 'image');
+        imageIcon.setAttributeNS('http://www.w3.org/1999/xlink', 'href', str_icon);
+        imageIcon.setAttribute('id', 'icon_pump_' + str_tag);
+        imageIcon.setAttribute('width', '24');
+        imageIcon.setAttribute('height', '24');
+        imageIcon.setAttribute('opacity', '1');
+        imageIcon.setAttribute('x', x + 23);
+        imageIcon.setAttribute('y', y);
+
+    El('#icon_location').appendChild(imageIcon);
+}
+
 function remove_all_by_id(strid){
     $("#icon_" + strid).remove();
     $(".circle_" + strid).remove();
@@ -128,4 +153,8 @@ function remove_all_by_id(strid){
     $("#alert_" + strid + "_1_foreign").remove();
     $("#alert_" + strid + "_2").remove();
     $("#alert_" + strid + "_2_foreign").remove();
+}
+
+function remove_pump_by_id(strid){
+    $("#icon_pump_" + strid).remove();
 }

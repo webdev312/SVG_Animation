@@ -4,6 +4,7 @@ var g_allData = {"TagList": [], "MoveList": {}, "AlertList": {}};
 var g_allAnimeData = {"MoveList": {}, "AlertList": {}};
 var g_arrStatsVals = {"Patients": [], "Assets":[], "LoS": []}
 var g_nIntervalID;
+var g_fromTime, g_toTime;
 
 function onSpeedRun(){
 	// Remove all elements
@@ -11,13 +12,21 @@ function onSpeedRun(){
 	$("#markers").empty();
 	$("#icon_location").empty();
 	$("#alerts").empty();
+
+	g_allData = {"TagList": [], "MoveList": {}, "AlertList": {}};
+	g_allAnimeData = {"MoveList": {}, "AlertList": {}};
+	g_arrStatsVals = {"Patients": [], "Assets":[], "LoS": []}
+
+	$("#patients").html("0");
+	$("#ontimestarts").html("0/0");
+
 	onInit();
 }
 
-$(window).blur(function(e) {
+window.addEventListener('blur', function(){
 	g_isFocus = false;
 });
-$(window).focus(function(e) {
+window.addEventListener('focus', function(){
 	g_isFocus = true;
 });
 
@@ -31,21 +40,21 @@ function getAvailableData(data){
 			if (data[i].command_data.stat_type == "No of patients"){
 				for (let j = 0; j < data[i].command_data.stat_values.length; j ++){
 					let stat_time = moment(data[i].command_data.stat_values[j].time, "YYYY-MM-DD hh:mm:ss");
-					if ((stat_time > from_time) && (stat_time <= to_time)){
+					if ((stat_time >= from_time) && (stat_time <= to_time)){
 						g_arrStatsVals["Patients"].push(data[i].command_data.stat_values[j]);
 					}
 				}
 			}else if(data[i].command_data.stat_type == "No of assets"){
 				for (let j = 0; j < data[i].command_data.stat_values.length; j ++){
 					let stat_time = moment(data[i].command_data.stat_values[j].time, "YYYY-MM-DD hh:mm:ss");
-					if ((stat_time > from_time) && (stat_time <= to_time)){
+					if ((stat_time >= from_time) && (stat_time <= to_time)){
 						g_arrStatsVals["Assets"].push(data[i].command_data.stat_values[j]);
 					}
 				}
 			}else if(data[i].command_data.stat_type == "Length of stay"){
 				for (let j = 0; j < data[i].command_data.stat_values.length; j ++){
 					let stat_time = moment(data[i].command_data.stat_values[j].time, "YYYY-MM-DD hh:mm:ss");
-					if ((stat_time > from_time) && (stat_time <= to_time)){
+					if ((stat_time >= from_time) && (stat_time <= to_time)){
 						g_arrStatsVals["LoS"].push(data[i].command_data.stat_values[j]);
 					}
 				}
@@ -229,17 +238,11 @@ function MoveEngine(moveData){
 	let to_time = moment(moveData.data.command_data.to_time, "YYYY-MM-DD hh:mm:ss");
 	let diff_time = (to_time - from_time) / 1000 / 60;
 
-	let is_discharge = (moveData.data.command_data.sequence == "DISCHARGE") ? 1 : 0;
 	let patient_id = moveData.data.command_data["patient_id"];
 	cur_anime.complete = function(){
 		createCircle(patient_id, x, y);
 		// createMoveDesc(x, y, time, zone);
 		ResetPath(cur_path.targets, x, y, diff_time);
-		if (is_discharge){
-			setTimeout(() => {
-				remove_all_by_id(patient_id);
-			}, 1000);
-		}
 	};
 
 	anime(cur_anime);
@@ -261,14 +264,18 @@ function AlertEngine(alertData){
 	alertData.data.alert_type == "patient in discharge"){
 		$(alertData.id).attr("x", alertData.data.x);
 		$(alertData.id).attr("y", alertData.data.y);
-		$(alertData.id + "_foreign").attr("x", alertData.data.x + 8);
-		$(alertData.id + "_foreign").attr("y", alertData.data.y + 6);
+		$(alertData.id + "_foreign").attr("x", alertData.data.x + 5);
+		$(alertData.id + "_foreign").attr("y", alertData.data.y + 3);
 	}else{
 		// move alert element by id
 		$(alertData.id).attr("x", origin_x + 13);
 		$(alertData.id).attr("y", origin_y + 27);
 		$(alertData.id + "_foreign").attr("x", origin_x + 19);
-		$(alertData.id + "_foreign").attr("y", origin_y + 32);	
+		$(alertData.id + "_foreign").attr("y", origin_y + 30);	
+	}
+
+	if (alertData.data.alert_text.indexOf("Infusion") >= 0){
+		createPump(alertData.data["patient_id"], origin_x, origin_y);
 	}
 
 	// start alert animation
@@ -294,7 +301,6 @@ function StateEngine(cur_time){
 			}else{
 				$("#ontimestarts").html(strOnTime.replace(/.*\//, patients+"/"));
 			}
-
 			break;
 		}
 	}
@@ -303,21 +309,23 @@ function StateEngine(cur_time){
 function runTime(n_mins, n_speed){
 	$('#cur_time').text($('#datetimepicker1').val());
 
-	var n_curMins = n_mins;
+	var n_curMins = 0;
 	g_nIntervalID = setInterval(() => {
-		if (g_isFocus == false) return;
-		
-		let str_curtime = $('#cur_time').text();
-		let cur_time = moment(str_curtime, "YYYY-MM-DD hh:mm:ss").format("YYYY-MM-DD HH:mm:ss");
+		if (g_isFocus == true){
+			let str_curtime = $('#cur_time').text();
+			let cur_time = moment(str_curtime, "YYYY-MM-DD hh:mm:ss").format("YYYY-MM-DD HH:mm:ss");
 
-		IsAvailableMotion(cur_time, n_speed);	// Check available move stack
+			IsAvailableMotion(cur_time, n_speed);	// Check available move stack
 
-		n_curMins --;
-		$('#cur_time').text(moment(str_curtime, "YYYY-MM-DD hh:mm:ss").add(1, 'minutes').format("YYYY-MM-DD HH:mm"));
-
-		if (n_curMins == 0){
-			clearInterval(g_nIntervalID);
-			$('#speed_playback').prop('disabled', false);
+			if (n_curMins == n_mins){
+				clearInterval(g_nIntervalID);
+				$('#speed_playback').prop('disabled', false);
+				$('#datetimepicker1').prop('disabled', false);
+				$('#datetimepicker2').prop('disabled', false);
+			}else{
+				n_curMins ++;
+				$('#cur_time').text(moment(str_curtime, "YYYY-MM-DD hh:mm:ss").add(1, 'minutes').format("YYYY-MM-DD HH:mm"));
+			}
 		}
 	}, TIME_FRAME_1MIN * n_speed);
 }
@@ -345,6 +353,13 @@ function IsAvailableMotion(cur_time, n_speed){
 				}
 				alert_end_time = moment(g_allAnimeData.AlertList[strTagName][j].data.to_time, "YYYY-MM-DD hh:mm:ss");
 				if (alert_end_time - current_time == 0){
+					let patient_id = g_allAnimeData.AlertList[strTagName][j].data["patient_id"];
+					if(g_allAnimeData.AlertList[strTagName][j].data.alert_type == "patient in discharge"){
+						remove_all_by_id(patient_id);
+					}
+					if(g_allAnimeData.AlertList[strTagName][j].data.alert_text.indexOf("Infusion") >= 0){
+						remove_pump_by_id(patient_id);
+					}
 					ResetAlert(g_allAnimeData.AlertList[strTagName][j].alert.targets);
 				}
 			}
@@ -356,16 +371,13 @@ function IsAvailableMotion(cur_time, n_speed){
 }
 
 function onInit(){
-	$('#datetimepicker1').datetimepicker({format: 'YYYY-MM-DD HH:mm'});
-	$('#datetimepicker1').val('2019-05-01 00:00');
-	$('#datetimepicker2').datetimepicker({format: 'YYYY-MM-DD HH:mm'});
-	$('#datetimepicker2').val('2019-05-02 00:00');
-
 	var json_Data = getAllData();
 	json_Data = getAvailableData(json_Data.tagdata);
 	getByTag(json_Data);
 
 	$('#speed_playback').prop('disabled', true);
+	$('#datetimepicker1').prop('disabled', true);
+	$('#datetimepicker2').prop('disabled', true);
 
 	clearInterval(g_nIntervalID);
 
@@ -377,5 +389,18 @@ function onInit(){
 }
 
 (function () {
+	$('#datetimepicker1').datetimepicker({format: 'YYYY-MM-DD HH:mm'}).on( "dp.hide", function() {
+		picked_time = moment($('#datetimepicker1').val(), "YYYY-MM-DD hh:mm:ss");
+		if (picked_time - g_fromTime != 0) onSpeedRun();
+	});
+	$('#datetimepicker2').datetimepicker({format: 'YYYY-MM-DD HH:mm'}).on( "dp.hide", function() {
+		picked_time = moment($('#datetimepicker2').val(), "YYYY-MM-DD hh:mm:ss");
+		if (picked_time - g_toTime != 0) onSpeedRun();
+	});
+	$('#datetimepicker1').val('2019-05-01 00:00');
+	$('#datetimepicker2').val('2019-05-01 01:00');
+	g_fromTime = moment($('#datetimepicker1').val(), "YYYY-MM-DD hh:mm:ss");
+	g_toTime = moment($('#datetimepicker2').val(), "YYYY-MM-DD hh:mm:ss");
+
 	onInit();
 })();
