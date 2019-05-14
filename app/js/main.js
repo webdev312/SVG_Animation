@@ -398,7 +398,7 @@ function onInit(){
 		if (picked_time - g_toTime != 0) onSpeedRun();
 	});
 	$('#datetimepicker1').val('2019-05-01 00:00');
-	$('#datetimepicker2').val('2019-05-01 01:00');
+	$('#datetimepicker2').val('2019-05-01 15:00');
 	g_fromTime = moment($('#datetimepicker1').val(), "YYYY-MM-DD hh:mm:ss");
 	g_toTime = moment($('#datetimepicker2').val(), "YYYY-MM-DD hh:mm:ss");
 
