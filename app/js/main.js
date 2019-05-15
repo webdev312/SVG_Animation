@@ -2,7 +2,7 @@ const TIME_FRAME_1MIN = 200;
 var g_isFocus = true;
 var g_allData = {"TagList": [], "MoveList": {}, "AlertList": {}};
 var g_allAnimeData = {"MoveList": {}, "AlertList": {}};
-var g_arrStatsVals = {"Patients": [], "Assets":[], "LoS": []}
+var g_arrStatsVals = {"Patients": [], "Assets":[], "LoS": [], "Turnover": []}
 var g_nIntervalID;
 var g_fromTime, g_toTime;
 
@@ -15,7 +15,7 @@ function onSpeedRun(){
 
 	g_allData = {"TagList": [], "MoveList": {}, "AlertList": {}};
 	g_allAnimeData = {"MoveList": {}, "AlertList": {}};
-	g_arrStatsVals = {"Patients": [], "Assets":[], "LoS": []}
+	g_arrStatsVals = {"Patients": [], "Assets":[], "LoS": [], "Turnover": []}
 
 	$("#patients").html("0");
 	$("#ontimestarts").html("0/0");
@@ -24,6 +24,7 @@ function onSpeedRun(){
 }
 
 window.addEventListener('blur', function(){
+	console.log("blured");
 	g_isFocus = false;
 });
 window.addEventListener('focus', function(){
@@ -56,6 +57,13 @@ function getAvailableData(data){
 					let stat_time = moment(data[i].command_data.stat_values[j].time, "YYYY-MM-DD hh:mm:ss");
 					if ((stat_time >= from_time) && (stat_time <= to_time)){
 						g_arrStatsVals["LoS"].push(data[i].command_data.stat_values[j]);
+					}
+				}
+			}else if(data[i].command_data.stat_type == "Room turnover"){
+				for (let j = 0; j < data[i].command_data.stat_values.length; j ++){
+					let stat_time = moment(data[i].command_data.stat_values[j].time, "YYYY-MM-DD hh:mm:ss");
+					if ((stat_time >= from_time) && (stat_time <= to_time)){
+						g_arrStatsVals["Turnover"].push(data[i].command_data.stat_values[j]);
 					}
 				}
 			}
@@ -250,32 +258,17 @@ function MoveEngine(moveData){
 }
 
 function AlertEngine(alertData){
-	// calculate Movement Icon position to adjust Alert position
-	let strMoveID = "#icon_" + alertData.data["patient_id"];
-	let origin_x = $(strMoveID).attr("x");
-	let origin_y = $(strMoveID).attr("y");
-	let tran_data = $(strMoveID).css("transform").replace(/[^0-9\-.,]/g, '').split(',');
-	origin_x = origin_x*1 + tran_data[4]*1;
-	origin_y = origin_y*1 + tran_data[5]*1;
+	$(alertData.id).attr("x", alertData.data.x);
+	$(alertData.id).attr("y", alertData.data.y);
+	$(alertData.id + "_foreign").attr("x", alertData.data.x + 5);
+	$(alertData.id + "_foreign").attr("y", alertData.data.y + 3);
 
-	if (alertData.data.alert_type == "patient in registration" || 
-	alertData.data.alert_type == "patient in triage" || 
-	alertData.data.alert_type == "patient in image" || 
-	alertData.data.alert_type == "patient in discharge"){
-		$(alertData.id).attr("x", alertData.data.x);
-		$(alertData.id).attr("y", alertData.data.y);
-		$(alertData.id + "_foreign").attr("x", alertData.data.x + 5);
-		$(alertData.id + "_foreign").attr("y", alertData.data.y + 3);
-	}else{
-		// move alert element by id
-		$(alertData.id).attr("x", origin_x + 13);
-		$(alertData.id).attr("y", origin_y + 27);
-		$(alertData.id + "_foreign").attr("x", origin_x + 19);
-		$(alertData.id + "_foreign").attr("y", origin_y + 30);	
-	}
-
-	if (alertData.data.alert_text.indexOf("Infusion") >= 0){
-		createPump(alertData.data["patient_id"], origin_x, origin_y);
+	if (alertData.data.alert_text.indexOf("Nurse") >= 0){
+		createNurse(alertData.data["patient_id"], alertData.data.x, alertData.data.y);
+	}else if (alertData.data.alert_text.indexOf("Doctor") >= 0){
+		createDoctor(alertData.data["patient_id"], alertData.data.x, alertData.data.y);
+	}else if (alertData.data.alert_text.indexOf("Infusion") >= 0){
+		createPump(alertData.data["patient_id"], alertData.data.x, alertData.data.y);
 	}
 
 	// start alert animation
@@ -323,6 +316,7 @@ function runTime(n_mins, n_speed){
 				$('#datetimepicker1').prop('disabled', false);
 				$('#datetimepicker2').prop('disabled', false);
 			}else{
+				if (n_mins % 60 == 0) moveChartDesc(n_curMins);
 				n_curMins ++;
 				$('#cur_time').text(moment(str_curtime, "YYYY-MM-DD hh:mm:ss").add(1, 'minutes').format("YYYY-MM-DD HH:mm"));
 			}
@@ -357,6 +351,12 @@ function IsAvailableMotion(cur_time, n_speed){
 					if(g_allAnimeData.AlertList[strTagName][j].data.alert_type == "patient in discharge"){
 						remove_all_by_id(patient_id);
 					}
+					if(g_allAnimeData.AlertList[strTagName][j].data.alert_text.indexOf("Nurse") >= 0){
+						remove_nurse_by_id(patient_id);
+					}
+					if(g_allAnimeData.AlertList[strTagName][j].data.alert_text.indexOf("Doctor") >= 0){
+						remove_doctor_by_id(patient_id);
+					}
 					if(g_allAnimeData.AlertList[strTagName][j].data.alert_text.indexOf("Infusion") >= 0){
 						remove_pump_by_id(patient_id);
 					}
@@ -386,6 +386,7 @@ function onInit(){
 	runTime(n_mins, n_speed);
 	process_Tags(null, n_speed);
 	drawChartLos(g_arrStatsVals["LoS"]);
+	drawChartTurnover(g_arrStatsVals["Turnover"]);
 }
 
 (function () {

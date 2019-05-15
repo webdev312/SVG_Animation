@@ -134,11 +134,43 @@ function createPump(strID, x, y){
     let imageIcon = document.createElementNS("http://www.w3.org/2000/svg", 'image');
         imageIcon.setAttributeNS('http://www.w3.org/1999/xlink', 'href', str_icon);
         imageIcon.setAttribute('id', 'icon_pump_' + str_tag);
-        imageIcon.setAttribute('width', '24');
-        imageIcon.setAttribute('height', '24');
+        imageIcon.setAttribute('width', '30');
+        imageIcon.setAttribute('height', '30');
         imageIcon.setAttribute('opacity', '1');
-        imageIcon.setAttribute('x', x + 23);
-        imageIcon.setAttribute('y', y);
+        imageIcon.setAttribute('x', x + 6);
+        imageIcon.setAttribute('y', y - 26);
+
+    El('#icon_location').appendChild(imageIcon);
+}
+
+function createNurse(strID, x, y){
+    let str_tag = replaceAll(strID, " ", "_");
+    let str_icon = "/svg/nurse.svg";
+
+    let imageIcon = document.createElementNS("http://www.w3.org/2000/svg", 'image');
+        imageIcon.setAttributeNS('http://www.w3.org/1999/xlink', 'href', str_icon);
+        imageIcon.setAttribute('id', 'icon_nurse_' + str_tag);
+        imageIcon.setAttribute('width', '30');
+        imageIcon.setAttribute('height', '30');
+        imageIcon.setAttribute('opacity', '1');
+        imageIcon.setAttribute('x', x + 6);
+        imageIcon.setAttribute('y', y - 26);
+
+    El('#icon_location').appendChild(imageIcon);
+}
+
+function createDoctor(strID, x, y){
+    let str_tag = replaceAll(strID, " ", "_");
+    let str_icon = "/svg/doctor.svg";
+
+    let imageIcon = document.createElementNS("http://www.w3.org/2000/svg", 'image');
+        imageIcon.setAttributeNS('http://www.w3.org/1999/xlink', 'href', str_icon);
+        imageIcon.setAttribute('id', 'icon_doctor_' + str_tag);
+        imageIcon.setAttribute('width', '30');
+        imageIcon.setAttribute('height', '30');
+        imageIcon.setAttribute('opacity', '1');
+        imageIcon.setAttribute('x', x + 6);
+        imageIcon.setAttribute('y', y - 26);
 
     El('#icon_location').appendChild(imageIcon);
 }
@@ -157,4 +189,12 @@ function remove_all_by_id(strid){
 
 function remove_pump_by_id(strid){
     $("#icon_pump_" + strid).remove();
+}
+
+function remove_nurse_by_id(strid){
+    $("#icon_nurse_" + strid).remove();
+}
+
+function remove_doctor_by_id(strid){
+    $("#icon_doctor_" + strid).remove();
 }

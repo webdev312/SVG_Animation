@@ -1,30 +1,62 @@
-function losChart(strID){
+var g_nLength_hour = 0;
+
+function moveChartDesc(cur_mins){
+    let line1 = d3.select("#los_line");
+    let line2 = d3.select("#turnover_line");
+    if (line1 != undefined){
+        let step = g_nLength_hour / 60 * (cur_mins + 1);
+        line1.attr("x1", step);
+        line1.attr("x2", step);
+        line2.attr("x1", step);
+        line2.attr("x2", step);
+    }
+}
+
+function drawChartTurnover(data){
+    $("#turn_time").empty();
+
+    var timeframe = [];
+    var dataframe = [];
+    var averageframe = [];
+    for (var i = 0; i < data.length; i ++){
+        let time_chart = moment(data[i]["time"], "YYYY-MM-DD hh:mm:ss");
+        timeframe[i] = time_chart.hours();
+        dataframe[i] = data[i]["turnover time"];
+    }
+    for (var i = 0; i < dataframe.length; i ++){
+        var sum = 0;
+        for (var j = 0; j <= i; j ++){
+            sum += dataframe[j];
+        }
+        averageframe[i] = (i == 0) ? 0 : sum / i;
+    }
+
     // 2. Use the margin convention practice 
     var margin = {top: 50, right: 70, bottom: 50, left: 70}
     , width = window.innerWidth / 100 * 40 - margin.left - margin.right - 20 // Use the window's width 
     , height = window.innerWidth / 100 * 20 - margin.top - margin.bottom; // Use the window's height
 
     // The number of datapoints
-    var n = 21;
+    var n = data.length;
 
     // 5. X scale will use the index of our data
-    var xScale = d3.scaleLinear()
-    .domain([0, n-1]) // input
+    var xScale = d3.scalePoint()
+    .domain(timeframe) // input
     .range([0, width]); // output
 
     // 6. Y scale will use the randomly generate number 
     var yScale = d3.scaleLinear()
-    .domain([0, 1]) // input 
-    .range([height, 0]); // output 
+    .domain([0, Math.ceil(d3.max(dataframe) / 100) * 100]) // input 
+    .range([height, 0]); // output
 
     // 7. d3's line generator
     var line1 = d3.line()
-    .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
+    .x(function(d, i) { return xScale(d.x); }) // set the x values for the line generator
     .y(function(d) { return yScale(d.y); }) // set the y values for the line generator 
     .curve(d3.curveMonotoneX) // apply smoothing to the line
 
     var line2 = d3.line()
-    .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
+    .x(function(d, i) { return xScale(d.x); }) // set the x values for the line generator
     .y(function(d) { return yScale(d.y); }) // set the y values for the line generator 
     .curve(d3.curveMonotoneX) // apply smoothing to the line
 
@@ -34,11 +66,11 @@ function losChart(strID){
     }
 
     // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-    var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } });
-    var dataset1 = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } });
+    var dataset1 = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": dataframe[i] } });
+    var dataset2 = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": averageframe[i] } });
 
     // 1. Add the SVG to the page and employ #2
-    var svg = d3.select("#" + strID).append("svg")
+    var svg = d3.select("#turn_time").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -57,12 +89,12 @@ function losChart(strID){
 
     // 9. Append the path, bind the data, and call the line generator 
     svg.append("path")
-    .datum(dataset) // 10. Binds data to the line 
+    .datum(dataset1) // 10. Binds data to the line 
     .attr("class", "line") // Assign a class for styling 
     .attr("d", line1); // 11. Calls the line generator 
 
     svg.append("path")
-    .datum(dataset1) // 10. Binds data to the line 
+    .datum(dataset2) // 10. Binds data to the line 
     .attr("class", "line1") // Assign a class for styling 
     .attr("d", line2); // 11. Calls the line generator 
 
@@ -72,26 +104,36 @@ function losChart(strID){
     .text("ROOM TURNOVER TIME")
 
     svg.append("text")
-    .attr("x", -height / 2 - 50)
+    .attr("x", -height / 2 - 80)
     .attr("y", width + 40)
     .attr("font-size", "12px")
-    .text("Average LOS (Green)")
+    .text("Average Turnover Time (Green)")
     .attr("transform", "rotate(270)")
 
     svg.append("text")
-    .attr("x", -height / 2 - 50)
+    .attr("x", -height / 2 - 76)
     .attr("y", -40)
     .attr("font-size", "12px")
-    .text("Patient LOS (Blue)")
+    .text("Patient Turnover Time (Blue)")
     .attr("transform", "rotate(270)")
 
     svg.append("g")
-  		.attr("class","grid")
+        .attr("class","grid")
+        .attr("opacity","0.4")
   		.style("stroke-dasharray",("3,3"))
   		.call(make_y_gridlines()
             .tickSize(-width)
             .tickFormat("")
-        )
+        );
+
+    svg.append("line")
+    .style("stroke", "black")
+    .attr("id", "turnover_line")
+    .attr("x1", 0)
+    .attr("y1", 0)
+    .attr("x2", 0)
+    .attr("y2", height)
+    .attr("opacity", 0.8);
 }
 
 function drawChartLos(data){
@@ -200,14 +242,22 @@ function drawChartLos(data){
     .attr("transform", "rotate(270)")
 
     svg.append("g")
-  		.attr("class","grid")
+        .attr("class","grid")
+        .attr("opacity","0.4")
   		.style("stroke-dasharray",("3,3"))
   		.call(make_y_gridlines()
             .tickSize(-width)
             .tickFormat("")
         )
-}
 
-(function(){
-    losChart("turn_time");
-})();
+    svg.append("line")
+    .style("stroke", "black")
+    .attr("id", "los_line")
+    .attr("x1", 0)
+    .attr("y1", 0)
+    .attr("x2", 0)
+    .attr("y2", height)
+    .attr("opacity", 0.8);
+
+    g_nLength_hour = xScale(1);
+}
