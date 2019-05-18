@@ -1,6 +1,7 @@
 function createCircle(id, x, y){
     let pathDotOutter = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
         pathDotOutter.setAttribute('class', 'circle_' + id);
+        pathDotOutter.setAttribute('id', 'circle_' + id);
         pathDotOutter.setAttribute('cx', x);
         pathDotOutter.setAttribute('cy', y);
         pathDotOutter.setAttribute('r', 6);
@@ -9,6 +10,7 @@ function createCircle(id, x, y){
 
     let pathDot = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
         pathDot.setAttribute('class', 'circle_' + id);
+        pathDot.setAttribute('id', 'circle_' + id);
         pathDot.setAttribute('cx', x);
         pathDot.setAttribute('cy', y);
         pathDot.setAttribute('r', 3);
@@ -18,55 +20,6 @@ function createCircle(id, x, y){
 
     El('#markers').appendChild(pathDotOutter);
     El('#markers').appendChild(pathDot);
-}
-
-function createMoveDesc(x, y, time, zone){
-    let alertRect = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
-    alertRect.setAttribute('x', x);
-    alertRect.setAttribute('y', y);
-    alertRect.setAttribute('width', 100);
-    alertRect.setAttribute('height', 30);
-    alertRect.setAttribute('rx', 4);
-    alertRect.setAttribute('ry', 4);
-    alertRect.setAttribute('stroke-width', 1);
-    alertRect.setAttribute('fill', 'white');
-    alertRect.setAttribute('stroke', 'black');
-    alertRect.setAttribute('class', 'point_rect');
-    alertRect.setAttribute('id', strid);
-    alertRect.setAttribute('opacity', 0);
-
-    El('#markers').appendChild(alertRect);
-
-    let alerts = d3.select("#markers");
-    let alertText = alerts.append('foreignObject')
-    .attr('id', strid + "_foreign")
-    .attr('opacity', 0)
-    .attr('text-anchor', 'middle')
-    .attr('font-size', '6px')
-    .attr('x', x + 5)
-    .attr('y', y + 5)
-    .attr('width', '90px')
-    .attr('height', '90px');
-    let div = alertText.append('xhtml:div')
-        .append('div').html(time);
-    // let pointText = document.createElementNS("http://www.w3.org/2000/svg", 'text');
-    // pointText.setAttribute('x', x + 7);
-    // pointText.setAttribute('y', y);
-    // pointText.setAttribute('class', 'point_text');
-
-    // let textTime = document.createElementNS("http://www.w3.org/2000/svg", 'tspan');
-    // let textZone = document.createElementNS("http://www.w3.org/2000/svg", 'tspan');
-    // textTime.setAttribute('dy', 0);
-    // textZone.setAttribute('dy', 5);
-    // textTime.setAttribute('x', x + 7);
-    // textZone.setAttribute('x', x + 7);
-
-    // textTime.textContent = time;
-    // textZone.textContent = zone;
-
-    // pointText.appendChild(textTime);
-    // pointText.appendChild(textZone);
-    // El('#markers').appendChild(pointText);
 }
 
 // Create Element by ID
@@ -113,18 +66,31 @@ function createAlert(strid, x, y, time, text){
 
     El('#alerts').appendChild(alertRect);
 
+    let desc_text = text.split(",")[0];
+    let time_text = text.split(",")[1];
+    
     let alerts = d3.select("#alerts");
-    let alertText = alerts.append('foreignObject')
-    .attr('id', strid + "_foreign")
+    let alertText = alerts.append('text')
+    .attr('id', strid + "_desc")
     .attr('opacity', 0)
-    .attr('text-anchor', 'middle')
     .attr('font-size', '6px')
+    .attr('letter-spacing', '0.5px')
     .attr('x', x + 5)
     .attr('y', y + 5)
-    .attr('width', '90px')
-    .attr('height', '90px');
-    let div = alertText.append('xhtml:div')
-        .append('div').html(text);
+    .attr('width', '70px')
+    .attr('height', '20px')
+    .text(desc_text);
+
+    let alertTime = alerts.append('text')
+    .attr('id', strid + "_time")
+    .attr('opacity', 0)
+    .attr('font-size', '6px')
+    .attr('letter-spacing', '0.5px')
+    .attr('x', x + 5)
+    .attr('y', y + 5)
+    .attr('width', '70px')
+    .attr('height', '20px')
+    .text(time_text);
 }
 
 function createPump(strID, x, y){
@@ -175,16 +141,46 @@ function createDoctor(strID, x, y){
     El('#icon_location').appendChild(imageIcon);
 }
 
+function moveIconToTop(strID){
+    let topEl = document.getElementById("sec_item");
+    topEl.href.baseVal = "#icon_" + strID;
+}
+function moveAlertToTop(strID){
+    let topEl = document.getElementById("top_alert");
+    topEl.href.baseVal = strID;
+
+    let topEl_desc = document.getElementById("top_alert_desc");
+    topEl_desc.href.baseVal = strID + "_desc";
+
+    let topEl_time = document.getElementById("top_alert_time");
+    topEl_time.href.baseVal = strID + "_time";
+}
+
 function remove_all_by_id(strid){
     $("#icon_" + strid).remove();
     $(".circle_" + strid).remove();
     $("#path_" + strid).remove();
     $("#alert_" + strid + "_0").remove();
-    $("#alert_" + strid + "_0_foreign").remove();
+    $("#alert_" + strid + "_0_desc").remove();
+    $("#alert_" + strid + "_0_time").remove();
     $("#alert_" + strid + "_1").remove();
-    $("#alert_" + strid + "_1_foreign").remove();
+    $("#alert_" + strid + "_1_desc").remove();
+    $("#alert_" + strid + "_1_time").remove();
     $("#alert_" + strid + "_2").remove();
-    $("#alert_" + strid + "_2_foreign").remove();
+    $("#alert_" + strid + "_2_desc").remove();
+    $("#alert_" + strid + "_2_time").remove();
+    $("#alert_" + strid + "_3").remove();
+    $("#alert_" + strid + "_3_desc").remove();
+    $("#alert_" + strid + "_3_time").remove();
+    $("#alert_" + strid + "_4").remove();
+    $("#alert_" + strid + "_4_desc").remove();
+    $("#alert_" + strid + "_4_time").remove();
+    $("#alert_" + strid + "_5").remove();
+    $("#alert_" + strid + "_5_desc").remove();
+    $("#alert_" + strid + "_5_time").remove();
+    $("#alert_" + strid + "_6").remove();
+    $("#alert_" + strid + "_6_desc").remove();
+    $("#alert_" + strid + "_6_time").remove();
 }
 
 function remove_pump_by_id(strid){

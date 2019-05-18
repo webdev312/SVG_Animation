@@ -247,6 +247,7 @@ function MoveEngine(moveData){
 	let diff_time = (to_time - from_time) / 1000 / 60;
 
 	let patient_id = moveData.data.command_data["patient_id"];
+	moveIconToTop(patient_id);
 	cur_anime.complete = function(){
 		createCircle(patient_id, x, y);
 		// createMoveDesc(x, y, time, zone);
@@ -260,8 +261,12 @@ function MoveEngine(moveData){
 function AlertEngine(alertData){
 	$(alertData.id).attr("x", alertData.data.x);
 	$(alertData.id).attr("y", alertData.data.y);
-	$(alertData.id + "_foreign").attr("x", alertData.data.x + 5);
-	$(alertData.id + "_foreign").attr("y", alertData.data.y + 3);
+	$(alertData.id + "_desc").attr("x", alertData.data.x + 5);
+	$(alertData.id + "_desc").attr("y", alertData.data.y + 10);
+	$(alertData.id + "_time").attr("x", alertData.data.x + 5);
+	$(alertData.id + "_time").attr("y", alertData.data.y + 19);
+
+	moveAlertToTop(alertData.id);
 
 	if (alertData.data.alert_text.indexOf("Nurse") >= 0){
 		createNurse(alertData.data["patient_id"], alertData.data.x, alertData.data.y);
@@ -273,7 +278,7 @@ function AlertEngine(alertData){
 
 	// start alert animation
 	let alert = alertData.alert;
-	alert.targets = alert.targets + "," + alert.targets + "_foreign";
+	alert.targets = alert.targets + "," + alert.targets + "_desc" + "," + alert.targets + "_time";
 	let id = alert.targets;
 	let x = alertData.x;
 	let y = alertData.y;
