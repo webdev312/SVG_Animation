@@ -183,6 +183,10 @@ function remove_all_by_id(strid){
     $("#alert_" + strid + "_6_time").remove();
 }
 
+function remove_all_circles_id(strid){
+    $(".circle_" + strid).remove();
+}
+
 function remove_pump_by_id(strid){
     $("#icon_pump_" + strid).remove();
 }

@@ -1,4 +1,4 @@
-const TIME_FRAME_1MIN = 200;
+const TIME_FRAME_1MIN = 80;
 var g_isFocus = true;
 var g_allData = {"TagList": [], "MoveList": {}, "AlertList": {}};
 var g_allAnimeData = {"MoveList": {}, "AlertList": {}};
@@ -249,9 +249,9 @@ function MoveEngine(moveData){
 	let patient_id = moveData.data.command_data["patient_id"];
 	moveIconToTop(patient_id);
 	cur_anime.complete = function(){
+		remove_all_circles_id(patient_id);
 		createCircle(patient_id, x, y);
-		// createMoveDesc(x, y, time, zone);
-		ResetPath(cur_path.targets, x, y, diff_time);
+		ResetPath(cur_path.targets, x, y, (diff_time < 5) ? diff_time : 5);
 	};
 
 	anime(cur_anime);
@@ -365,7 +365,15 @@ function IsAvailableMotion(cur_time, n_speed){
 					if(g_allAnimeData.AlertList[strTagName][j].data.alert_text.indexOf("Infusion") >= 0){
 						remove_pump_by_id(patient_id);
 					}
-					ResetAlert(g_allAnimeData.AlertList[strTagName][j].alert.targets);
+				}
+				if (alert_end_time - alert_from_time > 3 * 60 * 1000){
+					if (current_time - alert_from_time >= 3 * 60 * 1000){
+						ResetAlert(g_allAnimeData.AlertList[strTagName][j].alert.targets);
+					}
+				}else{
+					if (alert_end_time - current_time == 0){
+						ResetAlert(g_allAnimeData.AlertList[strTagName][j].alert.targets);
+					}
 				}
 			}
 		}
@@ -404,7 +412,7 @@ function onInit(){
 		if (picked_time - g_toTime != 0) onSpeedRun();
 	});
 	$('#datetimepicker1').val('2019-05-01 00:00');
-	$('#datetimepicker2').val('2019-05-01 15:00');
+	$('#datetimepicker2').val('2019-05-02 00:00');
 	g_fromTime = moment($('#datetimepicker1').val(), "YYYY-MM-DD hh:mm:ss");
 	g_toTime = moment($('#datetimepicker2').val(), "YYYY-MM-DD hh:mm:ss");
 
