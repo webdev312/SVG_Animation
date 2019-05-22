@@ -1,12 +1,12 @@
 /* D3JS lines css */
-.line {
-    fill: none;
-    stroke: rgb(44, 160, 44);
-    stroke-width: 2;
-}
 .line1 {
     fill: none;
     stroke: rgb(31, 119, 180);
+    stroke-width: 2;
+}
+.line2 {
+    fill: none;
+    stroke: rgb(44, 160, 44);
     stroke-width: 2;
 }
 .overlay {

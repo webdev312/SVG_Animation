@@ -49,7 +49,7 @@ function moveChartDesc(cur_mins){
     }
 }
 
-function drawChartTurnover(data){
+function drawChartTurnover(data, cur_time){
     $("#turn_time").empty();
 
     var timeframe = [];
@@ -57,6 +57,7 @@ function drawChartTurnover(data){
     var averageframe = [];
     for (var i = 0; i < data.length; i ++){
         let time_chart = moment(data[i]["time"], "YYYY-MM-DD hh:mm:ss");
+        if (time_chart - cur_time > 0) continue;
         timeframe[i] = time_chart;
         dataframe[i] = data[i]["turnover time"];
     }
@@ -74,7 +75,7 @@ function drawChartTurnover(data){
     , height = window.innerWidth / 100 * 20 - margin.top - margin.bottom;
 
     // The number of datapoints
-    var n = data.length;
+    var n = dataframe.length;
 
     // 5. X scale will use the index of our data
     xScale_Tov = d3.scaleTime()
@@ -129,12 +130,12 @@ function drawChartTurnover(data){
     // 9. Append the path, bind the data, and call the line generator 
     svg.append("path")
     .datum(dataset1_Tov) // 10. Binds data to the line 
-    .attr("class", "line") // Assign a class for styling 
+    .attr("class", "line1") // Assign a class for styling 
     .attr("d", line1); // 11. Calls the line generator 
 
     svg.append("path")
     .datum(dataset2_Tov) // 10. Binds data to the line 
-    .attr("class", "line1") // Assign a class for styling 
+    .attr("class", "line2") // Assign a class for styling 
     .attr("d", line2); // 11. Calls the line generator 
 
     svg.append("text")
@@ -165,34 +166,34 @@ function drawChartTurnover(data){
             .tickFormat("")
         );
 
-    svg.append("line")
-    .style("stroke", "black")
-    .attr("id", "turnover_line")
-    .attr("x1", 0)
-    .attr("y1", 0)
-    .attr("x2", 0)
-    .attr("y2", height)
-    .attr("opacity", 0.8);
+    // svg.append("line")
+    // .style("stroke", "black")
+    // .attr("id", "turnover_line")
+    // .attr("x1", 0)
+    // .attr("y1", 0)
+    // .attr("x2", 0)
+    // .attr("y2", height)
+    // .attr("opacity", 0.8);
 
-    svg.append("circle")
-    .attr("id", "tov_circle_green")
-    .attr("r", 7)
-    .style("stroke", "rgb(44, 160, 44)")
-    .style("fill", "none")
-    .style("stroke-width", "1px")
-    .style("opacity", "1");
+    // svg.append("circle")
+    // .attr("id", "tov_circle_green")
+    // .attr("r", 7)
+    // .style("stroke", "rgb(44, 160, 44)")
+    // .style("fill", "none")
+    // .style("stroke-width", "1px")
+    // .style("opacity", "1");
 
 
-    svg.append("circle")
-    .attr("id", "tov_circle_blue")
-    .attr("r", 7)
-    .style("stroke", "rgb(31, 119, 180)")
-    .style("fill", "none")
-    .style("stroke-width", "1px")
-    .style("opacity", "1");
+    // svg.append("circle")
+    // .attr("id", "tov_circle_blue")
+    // .attr("r", 7)
+    // .style("stroke", "rgb(31, 119, 180)")
+    // .style("fill", "none")
+    // .style("stroke-width", "1px")
+    // .style("opacity", "1");
 }
 
-function drawChartLos(data){
+function drawChartLos(data, cur_time){
     $("#len_stay").empty();
 
     var timeframe = [];
@@ -200,6 +201,7 @@ function drawChartLos(data){
     var averageframe = [];
     for (var i = 0; i < data.length; i ++){
         let time_chart = moment(data[i]["time"], "YYYY-MM-DD hh:mm:ss");
+        if (time_chart - cur_time > 0) continue;
         timeframe[i] = time_chart;
         dataframe[i] = data[i]["length of stay"];
     }
@@ -217,7 +219,7 @@ function drawChartLos(data){
     , height = window.innerWidth / 100 * 20 - margin.top - margin.bottom; // Use the window's height
 
     // The number of datapoints
-    var n = data.length;
+    var n = dataframe.length;
 
     // 5. X scale will use the index of our data
     xScale_Los = d3.scaleTime()
@@ -249,6 +251,9 @@ function drawChartLos(data){
     dataset1_Los = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": dataframe[i] } });
     dataset2_Los = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": averageframe[i] } });
 
+    // console.log(dataset1_Los);
+    // console.log(dataset2_Los);
+
     bisect_Los = d3.bisector(function(d) { return d.x}).left;
 
     // 1. Add the SVG to the page and employ #2
@@ -277,7 +282,7 @@ function drawChartLos(data){
 
     svg.append("path")
     .datum(dataset2_Los) // 10. Binds data to the line 
-    .attr("class", "line") // Assign a class for styling 
+    .attr("class", "line2") // Assign a class for styling 
     .attr("d", line2); // 11. Calls the line generator
 
     svg.append("text")
@@ -308,29 +313,29 @@ function drawChartLos(data){
             .tickFormat("")
         )
 
-    svg.append("line")
-    .style("stroke", "black")
-    .attr("id", "los_line")
-    .attr("x1", 0)
-    .attr("y1", 0)
-    .attr("x2", 0)
-    .attr("y2", height)
-    .attr("opacity", 0.8);
+    // svg.append("line")
+    // .style("stroke", "black")
+    // .attr("id", "los_line")
+    // .attr("x1", 0)
+    // .attr("y1", 0)
+    // .attr("x2", 0)
+    // .attr("y2", height)
+    // .attr("opacity", 0.8);
 
-    svg.append("circle")
-    .attr("id", "los_circle_green")
-    .attr("r", 7)
-    .style("stroke", "rgb(44, 160, 44)")
-    .style("fill", "none")
-    .style("stroke-width", "1px")
-    .style("opacity", "1");
+    // svg.append("circle")
+    // .attr("id", "los_circle_green")
+    // .attr("r", 7)
+    // .style("stroke", "rgb(44, 160, 44)")
+    // .style("fill", "none")
+    // .style("stroke-width", "1px")
+    // .style("opacity", "1");
 
 
-    svg.append("circle")
-    .attr("id", "los_circle_blue")
-    .attr("r", 7)
-    .style("stroke", "rgb(31, 119, 180)")
-    .style("fill", "none")
-    .style("stroke-width", "1px")
-    .style("opacity", "1");
+    // svg.append("circle")
+    // .attr("id", "los_circle_blue")
+    // .attr("r", 7)
+    // .style("stroke", "rgb(31, 119, 180)")
+    // .style("fill", "none")
+    // .style("stroke-width", "1px")
+    // .style("opacity", "1");
 }

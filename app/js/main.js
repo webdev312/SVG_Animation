@@ -18,7 +18,7 @@ function onSpeedRun(){
 	g_arrStatsVals = {"Patients": [], "Assets":[], "LoS": [], "Turnover": []}
 
 	$("#patients").html("0");
-	$("#ontimestarts").html("0/0");
+	// $("#ontimestarts").html("0/0");
 
 	onInit();
 }
@@ -236,6 +236,8 @@ function ResetAlert(id, x, y){
 }
 
 function MoveEngine(moveData){
+	if (moveData.data.command_data.zone == "registration") StateEngine();
+
 	let cur_anime = moveData.anime;
 	let cur_path = moveData.path;
 	let x = moveData.data.command_data.to_x*1;
@@ -286,22 +288,9 @@ function AlertEngine(alertData){
 	anime(alert);
 }
 
-function StateEngine(cur_time){
-	for (let i = 0; i < g_arrStatsVals["Patients"].length; i ++){
-		let stat_time = moment(g_arrStatsVals["Patients"][i].time, "YYYY-MM-DD hh:mm:ss");
-		if (cur_time - stat_time == 0){
-			let patients = g_arrStatsVals["Patients"][i]["number of patients"];
-			$("#patients").html(patients);
-
-			let strOnTime = $("#ontimestarts").html();
-			if (strOnTime == "0/0"){
-				$("#ontimestarts").html(patients + "/" + patients);
-			}else{
-				$("#ontimestarts").html(strOnTime.replace(/.*\//, patients+"/"));
-			}
-			break;
-		}
-	}
+function StateEngine(){
+	let patients = $("#patients").html()*1 + 1;
+	$("#patients").html(patients);
 }
 
 function runTime(n_mins, n_speed){
@@ -321,7 +310,11 @@ function runTime(n_mins, n_speed){
 				$('#datetimepicker1').prop('disabled', false);
 				$('#datetimepicker2').prop('disabled', false);
 			}else{
-				if (n_mins % 60 == 0) moveChartDesc(n_curMins);
+				if (n_mins % 60 == 0){
+					// moveChartDesc(n_curMins);
+					drawChartLos(g_arrStatsVals["LoS"], moment(str_curtime, "YYYY-MM-DD hh:mm:ss"));
+					drawChartTurnover(g_arrStatsVals["Turnover"], moment(str_curtime, "YYYY-MM-DD hh:mm:ss"));
+				}
 				n_curMins ++;
 				$('#cur_time').text(moment(str_curtime, "YYYY-MM-DD hh:mm:ss").add(1, 'minutes').format("YYYY-MM-DD HH:mm"));
 			}
@@ -378,9 +371,6 @@ function IsAvailableMotion(cur_time, n_speed){
 			}
 		}
 	}
-
-	// State Engine
-	StateEngine(current_time);
 }
 
 function onInit(){
@@ -398,8 +388,6 @@ function onInit(){
 	let n_mins = getTotalMinutes($('#datetimepicker1').val(), $('#datetimepicker2').val());
 	runTime(n_mins, n_speed);
 	process_Tags(null, n_speed);
-	drawChartLos(g_arrStatsVals["LoS"]);
-	drawChartTurnover(g_arrStatsVals["Turnover"]);
 }
 
 (function () {
