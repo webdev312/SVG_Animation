@@ -165,32 +165,6 @@ function drawChartTurnover(data, cur_time){
             .tickSize(-width)
             .tickFormat("")
         );
-
-    // svg.append("line")
-    // .style("stroke", "black")
-    // .attr("id", "turnover_line")
-    // .attr("x1", 0)
-    // .attr("y1", 0)
-    // .attr("x2", 0)
-    // .attr("y2", height)
-    // .attr("opacity", 0.8);
-
-    // svg.append("circle")
-    // .attr("id", "tov_circle_green")
-    // .attr("r", 7)
-    // .style("stroke", "rgb(44, 160, 44)")
-    // .style("fill", "none")
-    // .style("stroke-width", "1px")
-    // .style("opacity", "1");
-
-
-    // svg.append("circle")
-    // .attr("id", "tov_circle_blue")
-    // .attr("r", 7)
-    // .style("stroke", "rgb(31, 119, 180)")
-    // .style("fill", "none")
-    // .style("stroke-width", "1px")
-    // .style("opacity", "1");
 }
 
 function drawChartLos(data, cur_time){
@@ -288,7 +262,7 @@ function drawChartLos(data, cur_time){
     svg.append("text")
     .attr("x", width / 2 - 100)
     .attr("y", -20)
-    .text("LENGTH OF STAY (HOURS)")
+    .text("LENGTH OF STAY (MINUTES)")
 
     svg.append("text")
     .attr("x", -height / 2 - 50)
@@ -312,30 +286,4 @@ function drawChartLos(data, cur_time){
             .tickSize(-width)
             .tickFormat("")
         )
-
-    // svg.append("line")
-    // .style("stroke", "black")
-    // .attr("id", "los_line")
-    // .attr("x1", 0)
-    // .attr("y1", 0)
-    // .attr("x2", 0)
-    // .attr("y2", height)
-    // .attr("opacity", 0.8);
-
-    // svg.append("circle")
-    // .attr("id", "los_circle_green")
-    // .attr("r", 7)
-    // .style("stroke", "rgb(44, 160, 44)")
-    // .style("fill", "none")
-    // .style("stroke-width", "1px")
-    // .style("opacity", "1");
-
-
-    // svg.append("circle")
-    // .attr("id", "los_circle_blue")
-    // .attr("r", 7)
-    // .style("stroke", "rgb(31, 119, 180)")
-    // .style("fill", "none")
-    // .style("stroke-width", "1px")
-    // .style("opacity", "1");
 }
