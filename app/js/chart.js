@@ -250,14 +250,14 @@ function drawChartLos(data, cur_time){
 
     // 9. Append the path, bind the data, and call the line generator 
     svg.append("path")
-    .datum(dataset1_Los) // 10. Binds data to the line 
-    .attr("class", "line1") // Assign a class for styling 
-    .attr("d", line1); // 11. Calls the line generator
+    .datum(dataset1_Los)
+    .attr("class", "line1") 
+    .attr("d", line1);
 
     svg.append("path")
-    .datum(dataset2_Los) // 10. Binds data to the line 
-    .attr("class", "line2") // Assign a class for styling 
-    .attr("d", line2); // 11. Calls the line generator
+    .datum(dataset2_Los)
+    .attr("class", "line2") 
+    .attr("d", line2); 
 
     svg.append("text")
     .attr("x", width / 2 - 100)
