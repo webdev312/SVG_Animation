@@ -77,26 +77,23 @@ function drawChartTurnover(data, cur_time){
     // The number of datapoints
     var n = dataframe.length;
 
-    // 5. X scale will use the index of our data
     xScale_Tov = d3.scaleTime()
-    .domain(d3.extent(timeframe, function(d) { return d; })) // input
-    .range([0, width]); // output
+    .domain(d3.extent(timeframe, function(d) { return d; })) 
+    .range([0, width]); 
 
-    // 6. Y scale will use the randomly generate number 
     yScale_Tov = d3.scaleLinear()
-    .domain([0, Math.ceil(d3.max(dataframe) / 100) * 100]) // input 
-    .range([height, 0]); // output
+    .domain([0, Math.ceil(d3.max(dataframe) / 100) * 100])
+    .range([height, 0]);
 
-    // 7. d3's line generator
     var line1 = d3.line()
-    .x(function(d, i) { return xScale_Tov(d.x); }) // set the x values for the line generator
-    .y(function(d) { return yScale_Tov(d.y); }) // set the y values for the line generator 
-    .curve(d3.curveMonotoneX) // apply smoothing to the line
+    .x(function(d, i) { return xScale_Tov(d.x); })
+    .y(function(d) { return yScale_Tov(d.y); }) 
+    .curve(d3.curveMonotoneX) 
 
     var line2 = d3.line()
-    .x(function(d, i) { return xScale_Tov(d.x); }) // set the x values for the line generator
-    .y(function(d) { return yScale_Tov(d.y); }) // set the y values for the line generator 
-    .curve(d3.curveMonotoneX) // apply smoothing to the line
+    .x(function(d, i) { return xScale_Tov(d.x); })
+    .y(function(d) { return yScale_Tov(d.y); })
+    .curve(d3.curveMonotoneX) 
 
     function make_y_gridlines() {
         return d3.axisLeft(yScale_Tov)
@@ -109,34 +106,30 @@ function drawChartTurnover(data, cur_time){
 
     bisect_Tov = d3.bisector(function(d) { return d.x}).left;
 
-    // 1. Add the SVG to the page and employ #2
     var svg = d3.select("#turn_time").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // 3. Call the x axis in a group tag
     svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(xScale_Tov)); // Create an axis component with d3.axisBottom
+    .call(d3.axisBottom(xScale_Tov)); 
 
-    // 4. Call the y axis in a group tag
     svg.append("g")
     .attr("class", "y axis")
-    .call(d3.axisLeft(yScale_Tov)); // Create an axis component with d3.axisLeft
-
-    // 9. Append the path, bind the data, and call the line generator 
-    svg.append("path")
-    .datum(dataset1_Tov) // 10. Binds data to the line 
-    .attr("class", "line1") // Assign a class for styling 
-    .attr("d", line1); // 11. Calls the line generator 
+    .call(d3.axisLeft(yScale_Tov)); 
 
     svg.append("path")
-    .datum(dataset2_Tov) // 10. Binds data to the line 
-    .attr("class", "line2") // Assign a class for styling 
-    .attr("d", line2); // 11. Calls the line generator 
+    .datum(dataset1_Tov) 
+    .attr("class", "line1") 
+    .attr("d", line1);
+
+    svg.append("path")
+    .datum(dataset2_Tov) 
+    .attr("class", "line2") 
+    .attr("d", line2);
 
     svg.append("text")
     .attr("x", width / 2 - 100)
