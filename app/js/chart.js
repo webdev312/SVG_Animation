@@ -195,60 +195,49 @@ function drawChartLos(data, cur_time){
     // The number of datapoints
     var n = dataframe.length;
 
-    // 5. X scale will use the index of our data
     xScale_Los = d3.scaleTime()
-    .domain(d3.extent(timeframe, function(d) { return d; })) // input
-    .range([0, width]); // output
+    .domain(d3.extent(timeframe, function(d) { return d; }))
+    .range([0, width]);
 
-    // 6. Y scale will use the randomly generate number 
     yScale_Los = d3.scaleLinear()
-    .domain([0, Math.ceil(d3.max(dataframe) / 100) * 100]) // input 
-    .range([height, 0]); // output
+    .domain([0, Math.ceil(d3.max(dataframe) / 100) * 100]) 
+    .range([height, 0]); 
 
     function make_y_gridlines() {
         return d3.axisLeft(yScale_Los)
             .ticks(4)
     }
 
-    // 7. d3's line generator
     var line1 = d3.line()
-    .x(function(d, i) { return xScale_Los(d.x); }) // set the x values for the line generator
-    .y(function(d) { return yScale_Los(d.y); }) // set the y values for the line generator 
-    .curve(d3.curveMonotoneX) // apply smoothing to the line
+    .x(function(d, i) { return xScale_Los(d.x); }) 
+    .y(function(d) { return yScale_Los(d.y); }) 
+    .curve(d3.curveMonotoneX) 
 
     var line2 = d3.line()
-    .x(function(d, i) { return xScale_Los(d.x); }) // set the x values for the line generator
-    .y(function(d) { return yScale_Los(d.y); }) // set the y values for the line generator 
-    .curve(d3.curveMonotoneX) // apply smoothing to the line
+    .x(function(d, i) { return xScale_Los(d.x); }) 
+    .y(function(d) { return yScale_Los(d.y); })
+    .curve(d3.curveMonotoneX)
 
-    // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
     dataset1_Los = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": dataframe[i] } });
     dataset2_Los = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": averageframe[i] } });
 
-    // console.log(dataset1_Los);
-    // console.log(dataset2_Los);
-
     bisect_Los = d3.bisector(function(d) { return d.x}).left;
 
-    // 1. Add the SVG to the page and employ #2
     var svg = d3.select("#len_stay").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // 3. Call the x axis in a group tag
     svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(xScale_Los)); // Create an axis component with d3.axisBottom
+    .call(d3.axisBottom(xScale_Los)); 
 
-    // 4. Call the y axis in a group tag
     svg.append("g")
     .attr("class", "y axis")
-    .call(d3.axisLeft(yScale_Los).ticks(4)); // Create an axis component with d3.axisLeft
+    .call(d3.axisLeft(yScale_Los).ticks(4)); 
 
-    // 9. Append the path, bind the data, and call the line generator 
     svg.append("path")
     .datum(dataset1_Los)
     .attr("class", "line1") 
