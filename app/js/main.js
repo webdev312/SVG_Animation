@@ -236,7 +236,11 @@ function ResetAlert(id, x, y){
 }
 
 function MoveEngine(moveData){
-	if (moveData.data.command_data.zone == "registration") StateEngine();
+	if (moveData.data.command_data.to_zone == "registration") StateEngine();
+	if (moveData.data.command_data.from_zone.indexOf("Room") >= 0){
+		let room_id = moveData.data.command_data.from_zone;
+		$("#" + room_id).show();
+	}
 
 	let cur_anime = moveData.anime;
 	let cur_path = moveData.path;
@@ -261,6 +265,11 @@ function MoveEngine(moveData){
 }
 
 function AlertEngine(alertData){
+	if (alertData.data.zone.indexOf("Room") >= 0){
+		let room_id = alertData.data.zone;
+		$("#" + room_id).hide();
+	}
+
 	$(alertData.id).attr("x", alertData.data.x);
 	$(alertData.id).attr("y", alertData.data.y);
 	$(alertData.id + "_desc").attr("x", alertData.data.x + 5);

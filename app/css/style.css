@@ -14,6 +14,10 @@
     pointer-events: all;
 }
 
+/* Room Color */
+.st_room{
+    fill: #ADADAD;
+}
 /* Header */
 .navbar-brand{
     color: white !important;
