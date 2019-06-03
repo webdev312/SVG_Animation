@@ -100,7 +100,6 @@ function drawChartTurnover(data, cur_time){
             .ticks(4)
     }
 
-    // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
     dataset1_Tov = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": dataframe[i] } });
     dataset2_Tov = d3.range(n).map(function(d, i) { return {"x": timeframe[i], "y": averageframe[i] } });
 
