@@ -181,8 +181,8 @@ function drawChartLos(data, cur_time){
     
     // 2. Use the margin convention practice
     var margin = {top: 50, right: 70, bottom: 50, left: 70}
-    , width = window.innerWidth / 100 * 40 - margin.left - margin.right - 20 // Use the window's width 
-    , height = window.innerWidth / 100 * 20 - margin.top - margin.bottom; // Use the window's height
+    , width = window.innerWidth / 100 * 40 - margin.left - margin.right - 20 
+    , height = window.innerWidth / 100 * 20 - margin.top - margin.bottom; 
 
     // The number of datapoints
     var n = dataframe.length;
