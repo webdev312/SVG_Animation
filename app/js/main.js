@@ -18,7 +18,6 @@ function onSpeedRun(){
 	g_arrStatsVals = {"Patients": [], "Assets":[], "LoS": [], "Turnover": []}
 
 	$("#patients").html("0");
-	// $("#ontimestarts").html("0/0");
 
 	onInit();
 }
