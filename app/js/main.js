@@ -23,7 +23,6 @@ function onSpeedRun(){
 }
 
 window.addEventListener('blur', function(){
-	console.log("blured");
 	g_isFocus = false;
 });
 window.addEventListener('focus', function(){
