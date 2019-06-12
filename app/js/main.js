@@ -75,6 +75,7 @@ function getAvailableData(data){
 	}
 	return retData;
 }
+
 // Seperate json data by Tag names
 function getByTag(data){
 	// Get Patient IDs
