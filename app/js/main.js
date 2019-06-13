@@ -119,9 +119,7 @@ function getByTag(data){
 
 function process_Tags(arr_Data, n_speed){
 	for (let n = 0; n < g_allData.TagList.length; n ++){
-		/*
 		// Move Animation by Tag Name
-		*/
 		let arr_MoveData = g_allData.MoveList[g_allData.TagList[n]];
 		if (arr_MoveData.length == 0) continue;
 
