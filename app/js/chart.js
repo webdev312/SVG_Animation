@@ -105,7 +105,7 @@ function drawChartTurnover(data, cur_time){
 
     bisect_Tov = d3.bisector(function(d) { return d.x}).left;
 
-    var svg = d3.select("#turn_time").append("svg")
+    var svg = d3.select("#turn_time").append("svg_line")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
