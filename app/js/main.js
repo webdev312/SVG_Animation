@@ -167,9 +167,7 @@ function process_Tags(arr_Data, n_speed){
 			g_allAnimeData.MoveList[g_allData.TagList[n]].push(st_move);
 		}
 
-		/*
 		// Alert Animation by Tag Name
-		*/
 		let arr_AlertData = g_allData.AlertList[g_allData.TagList[n]];
 		if (arr_AlertData.length == 0) continue;
 		g_allAnimeData.AlertList[g_allData.TagList[n]] = [];
