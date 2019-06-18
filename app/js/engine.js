@@ -1,12 +1,4 @@
 function createCircle(id, x, y){
-    let pathDotOutter = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-        pathDotOutter.setAttribute('class', 'circle_' + id);
-        pathDotOutter.setAttribute('id', 'circle_' + id);
-        pathDotOutter.setAttribute('cx', x);
-        pathDotOutter.setAttribute('cy', y);
-        pathDotOutter.setAttribute('r', 6);
-        pathDotOutter.setAttribute('fill', "#455");
-        pathDotOutter.setAttribute('opacity', "0.4");
 
     let pathDot = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
         pathDot.setAttribute('class', 'circle_' + id);
