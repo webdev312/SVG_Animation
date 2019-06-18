@@ -50,19 +50,7 @@ function createIcon(data_Term){
 }
 
 function createAlert(strid, x, y, time, text){
-    let alertRect = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
-    alertRect.setAttribute('x', x);
-    alertRect.setAttribute('y', y);
-    alertRect.setAttribute('width', 80);
-    alertRect.setAttribute('height', 25);
-    alertRect.setAttribute('rx', 4);
-    alertRect.setAttribute('ry', 4);
-    alertRect.setAttribute('stroke-width', 1);
-    alertRect.setAttribute('fill', 'white');
-    alertRect.setAttribute('stroke', 'green');
-    alertRect.setAttribute('class', 'point_rect');
-    alertRect.setAttribute('id', strid);
-    alertRect.setAttribute('opacity', 0);
+    
 
     El('#alerts').appendChild(alertRect);
 
