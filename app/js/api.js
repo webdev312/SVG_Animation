@@ -12,6 +12,5 @@ function getAllData(){
             console.log(err);
         }
     });
-
     return ret;
 }
