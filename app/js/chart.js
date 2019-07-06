@@ -111,7 +111,10 @@ function drawChartTurnover(data, cur_time){
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    
+    svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xScale_Tov)); 
 
     svg.append("g")
     .attr("class", "y axis")
