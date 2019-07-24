@@ -2,7 +2,7 @@
   var fs = require('fs');
   var express = require('express');
   var http = require('http');
-  var bodyParser = require('body-parser');
+  var bodyParser =require('body-parser');
   var app = express();
 
   app.set('port', 8080);
